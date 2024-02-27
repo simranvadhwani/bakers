@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+import Images from '../../img/carousel-1.jpg';
 
 const Slides = () => {
   return (
@@ -6,7 +7,7 @@ const Slides = () => {
    <div className="container-fluid p-0 pb-5 wow fadeIn" data-wow-delay="0.1s">
         <div className="owl-carousel header-carousel position-relative">
             <div className="owl-carousel-item position-relative">
-                <img className="img-fluid" src="~/img/carousel-1.jpg" alt=""/>
+                <img className="img-fluid" src={Images} alt={Images}/>
                 <div className="owl-carousel-inner">
                     <div className="container">
                         <div className="row justify-content-start">

@@ -1,4 +1,8 @@
-import React from 'react'
+import React from 'react';
+import team1 from '../../img/team-1.jpg';
+import team2 from '../../img/team-2.jpg';
+import team3 from '../../img/team-3.jpg';
+import team4 from '../../img/team-4.jpg';
 
 const OurTeam = () => {
   return (
@@ -12,7 +16,7 @@ const OurTeam = () => {
             <div className="row g-4">
                 <div className="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                     <div className="team-item text-center rounded overflow-hidden">
-                        <img className="img-fluid" src="img/team-1.jpg" alt=""/>
+                        <img className="img-fluid" src={team1} alt={team1}/>
                         <div className="team-text">
                             <div className="team-title">
                                 <h5>Full Name</h5>
@@ -28,7 +32,7 @@ const OurTeam = () => {
                 </div>
                 <div className="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
                     <div className="team-item text-center rounded overflow-hidden">
-                        <img className="img-fluid" src="img/team-2.jpg" alt=""/>
+                        <img className="img-fluid" src={team2} alt={team2}/>
                         <div className="team-text">
                             <div className="team-title">
                                 <h5>Full Name</h5>
@@ -44,7 +48,7 @@ const OurTeam = () => {
                 </div>
                 <div className="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
                     <div className="team-item text-center rounded overflow-hidden">
-                        <img className="img-fluid" src="img/team-3.jpg" alt=""/>
+                        <img className="img-fluid" src={team3} alt={team3}/>
                         <div className="team-text">
                             <div className="team-title">
                                 <h5>Full Name</h5>
@@ -60,7 +64,7 @@ const OurTeam = () => {
                 </div>
                 <div className="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.7s">
                     <div className="team-item text-center rounded overflow-hidden">
-                        <img className="img-fluid" src="img/team-4.jpg" alt=""/>
+                        <img className="img-fluid" src={team4} alt={team4}/>
                         <div className="team-text">
                             <div className="team-title">
                                 <h5>Full Name</h5>

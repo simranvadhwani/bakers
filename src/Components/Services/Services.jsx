@@ -1,4 +1,6 @@
-import React from 'react'
+import React from 'react';
+import service1 from '../../img/service-1.jpg';
+import service2 from '../../img/service-2.jpg';
 
 const Services = () => {
   return (
@@ -52,10 +54,10 @@ const Services = () => {
                 <div className="col-lg-6 wow fadeInUp" data-wow-delay="0.5s">
                     <div className="row img-twice position-relative h-100">
                         <div className="col-6">
-                            <img className="img-fluid rounded" src="img/service-1.jpg" alt=""/>
+                            <img className="img-fluid rounded" src={service1} alt={service1}/>
                         </div>
                         <div className="col-6 align-self-end">
-                            <img className="img-fluid rounded" src="img/service-2.jpg" alt=""/>
+                            <img className="img-fluid rounded" src={service2} alt={service2}/>
                         </div>
                     </div>
                 </div>

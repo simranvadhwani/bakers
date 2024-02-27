@@ -1,5 +1,6 @@
 import React from 'react'
-
+import about1 from '../../img/about-1.jpg';
+import about2 from '../../img/about-2.jpg';
 const AboutUs = () => {
   return (
     <>
@@ -9,10 +10,10 @@ const AboutUs = () => {
                 <div className="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
                     <div className="row img-twice position-relative h-100">
                         <div className="col-6">
-                            <img className="img-fluid rounded" src="img/about-1.jpg" alt=""/>
+                            <img className="img-fluid rounded" src={about1} alt={about1}/>
                         </div>
                         <div className="col-6 align-self-end">
-                            <img className="img-fluid rounded" src="img/about-2.jpg" alt=""/>
+                            <img className="img-fluid rounded" src={about2} alt={about2}/>
                         </div>
                     </div>
                 </div>
@@ -41,12 +42,7 @@ const AboutUs = () => {
                 </div>
             </div>
         </div>
-    </div>
-
-    
-    
-    
-    
+    </div>  
     </>
   )
 }

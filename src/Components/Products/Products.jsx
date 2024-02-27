@@ -1,5 +1,7 @@
-import React from 'react'
-
+import React from 'react';
+import product1 from '../../img/product-1.jpg';
+import product2 from '../../img/product-2.jpg';
+import product3 from '../../img/product-3.jpg';
 const Products = () => {
   return (
     <>
@@ -18,7 +20,7 @@ const Products = () => {
                             <span>Tempor erat elitr rebum at clita dolor diam ipsum sit diam amet diam et eos</span>
                         </div>
                         <div className="position-relative mt-auto">
-                            <img className="img-fluid" src="img/product-1.jpg" alt=""/>
+                            <img className="img-fluid" src={product1} alt={product1}/>
                             <div className="product-overlay">
                                 <a className="btn btn-lg-square btn-outline-light rounded-circle" href=""><i className="fa fa-eye text-primary"></i></a>
                             </div>
@@ -33,7 +35,7 @@ const Products = () => {
                             <span>Tempor erat elitr rebum at clita dolor diam ipsum sit diam amet diam et eos</span>
                         </div>
                         <div className="position-relative mt-auto">
-                            <img className="img-fluid" src="img/product-2.jpg" alt=""/>
+                            <img className="img-fluid" src={product2} alt={product2}/>
                             <div className="product-overlay">
                                 <a className="btn btn-lg-square btn-outline-light rounded-circle" href=""><i className="fa fa-eye text-primary"></i></a>
                             </div>
@@ -48,7 +50,7 @@ const Products = () => {
                             <span>Tempor erat elitr rebum at clita dolor diam ipsum sit diam amet diam et eos</span>
                         </div>
                         <div className="position-relative mt-auto">
-                            <img className="img-fluid" src="img/product-3.jpg" alt=""/>
+                            <img className="img-fluid" src={product3} alt={product3}/>
                             <div className="product-overlay">
                                 <a className="btn btn-lg-square btn-outline-light rounded-circle" href=""><i className="fa fa-eye text-primary"></i></a>
                             </div>
