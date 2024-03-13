@@ -13,7 +13,8 @@ import Footer from "./Components/Footer/Footer";
 function App() {
   return (
     <>
-      <Spinner />
+      {/* <Spinner /> */}
+
       <Navbar />
       <Slides />
       <Experience />

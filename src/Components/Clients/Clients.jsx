@@ -1,4 +1,8 @@
 import React from 'react'
+import Testimonial1 from '../../img/testimonial-1.jpg';
+import Testimonial2 from '../../img/testimonial-2.jpg';
+import Testimonial3 from '../../img/testimonial-3.jpg';
+import Testimonial4 from '../../img/testimonial-4.jpg';
 
 const Clients = () => {
   return (
@@ -12,7 +16,7 @@ const Clients = () => {
             <div className="owl-carousel testimonial-carousel wow fadeInUp" data-wow-delay="0.1s">
                 <div className="testimonial-item bg-white rounded p-4">
                     <div className="d-flex align-items-center mb-4">
-                        <img className="flex-shrink-0 rounded-circle border p-1" src="img/testimonial-1.jpg" alt=""/>
+                              <img className="flex-shrink-0 rounded-circle border p-1" src={Testimonial1} alt={Testimonial1 } />
                         <div className="ms-4">
                             <h5 className="mb-1">Client Name</h5>
                             <span>Profession</span>
@@ -22,7 +26,7 @@ const Clients = () => {
                 </div>
                 <div className="testimonial-item bg-white rounded p-4">
                     <div className="d-flex align-items-center mb-4">
-                        <img className="flex-shrink-0 rounded-circle border p-1" src="img/testimonial-2.jpg" alt=""/>
+                              <img className="flex-shrink-0 rounded-circle border p-1" src={Testimonial2} alt={Testimonial2 } />
                         <div className="ms-4">
                             <h5 className="mb-1">Client Name</h5>
                             <span>Profession</span>
@@ -32,7 +36,7 @@ const Clients = () => {
                 </div>
                 <div className="testimonial-item bg-white rounded p-4">
                     <div className="d-flex align-items-center mb-4">
-                        <img className="flex-shrink-0 rounded-circle border p-1" src="img/testimonial-3.jpg" alt=""/>
+                              <img className="flex-shrink-0 rounded-circle border p-1" src={Testimonial3} alt={Testimonial3 } />
                         <div className="ms-4">
                             <h5 className="mb-1">Client Name</h5>
                             <span>Profession</span>
@@ -42,7 +46,7 @@ const Clients = () => {
                 </div>
                 <div className="testimonial-item bg-white rounded p-4">
                     <div className="d-flex align-items-center mb-4">
-                        <img className="flex-shrink-0 rounded-circle border p-1" src="img/testimonial-4.jpg" alt=""/>
+                              <img className="flex-shrink-0 rounded-circle border p-1" src={Testimonial4} alt={Testimonial4} />
                         <div className="ms-4">
                             <h5 className="mb-1">Client Name</h5>
                             <span>Profession</span>

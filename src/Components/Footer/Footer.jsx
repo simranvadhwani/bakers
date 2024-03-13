@@ -1,14 +1,12 @@
 import React from "react";
-// import product1 from '../../img/product-1.jpg';
-// import product2 from '../../img/product-2.jpg';
-// import product3 from '../../img/product-3.jpg';
-// import product4 from '../../img/product-4.jpg';
-// import product5 from '../../img/product-5.jpg';
-// import product6 from '../../img/product-6.jpg';
+import product1 from '../../img/product-1.jpg';
+import product2 from '../../img/product-2.jpg';
+import product3 from '../../img/product-3.jpg';
+
 
 const Footer = () => {
-//   const prodcuts = [product1, product2, product3, product4, product5, product6];
-//   console.log(products);
+  const products = [product1, product2, product3];
+  console.log(products);
 
   return (
     <>
@@ -78,57 +76,15 @@ const Footer = () => {
             <div className="col-lg-3 col-md-6">
               <h4 className="text-light mb-4">Photo Gallery</h4>
               <div className="row g-2">
-                {/* {prodcuts.map((p, index) => {
-                  <div className="col-4">
-                    <img
-                      className="img-fluid bg-light rounded p-1"
-                      src={p}
-                      alt="Image"
-                    />
-                  </div>;
-                })} */}
-                <div className="col-4">
-                  <img
-                    className="img-fluid bg-light rounded p-1"
-                    src="img/product-1.jpg"
-                    alt="Image"
-                  />
-                </div>
-                <div className="col-4">
-                  <img
-                    className="img-fluid bg-light rounded p-1"
-                    src="img/product-2.jpg"
-                    alt="Image"
-                  />
-                </div>
-                <div className="col-4">
-                  <img
-                    className="img-fluid bg-light rounded p-1"
-                    src="img/product-3.jpg"
-                    alt="Image"
-                  />
-                </div>
-                <div className="col-4">
-                  <img
-                    className="img-fluid bg-light rounded p-1"
-                    src="img/product-2.jpg"
-                    alt="Image"
-                  />
-                </div>
-                <div className="col-4">
-                  <img
-                    className="img-fluid bg-light rounded p-1"
-                    src="img/product-3.jpg"
-                    alt="Image"
-                  />
-                </div>
-                <div className="col-4">
-                  <img
-                    className="img-fluid bg-light rounded p-1"
-                    src="img/product-1.jpg"
-                    alt="Image"
-                  />
-                </div>
+                {products.map((p, index) => (
+                    <div className="col-4" key={index}>
+                      <img
+                        className="img-fluid bg-light rounded p-1"
+                        src={p}
+                        alt={`product-${index}`}
+                      />
+                    </div>
+                  ))}
               </div>
             </div>
           </div>

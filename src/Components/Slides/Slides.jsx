@@ -1,5 +1,6 @@
 import React from 'react';
-import Images from '../../img/carousel-1.jpg';
+import slide1 from '../../img/carousel-1.jpg';
+import slide2 from '../../img/carousel-2.jpg';
 
 const Slides = () => {
   return (
@@ -7,7 +8,7 @@ const Slides = () => {
    <div className="container-fluid p-0 pb-5 wow fadeIn" data-wow-delay="0.1s">
         <div className="owl-carousel header-carousel position-relative">
             <div className="owl-carousel-item position-relative">
-                <img className="img-fluid" src={Images} alt={Images}/>
+                <img className="img-fluid" src={slide1} alt={slide1}/>
                 <div className="owl-carousel-inner">
                     <div className="container">
                         <div className="row justify-content-start">
@@ -21,8 +22,8 @@ const Slides = () => {
                     </div>
                 </div>
             </div>
-            <div className="owl-carousel-item position-relative">
-                <img className="img-fluid" src="/img/carousel-2.jpg" alt=""/>
+            {/* <div className="owl-carousel-item position-relative">
+                <img className="img-fluid" src={slide2}  alt=""/>
                 <div className="owl-carousel-inner">
                     <div className="container">
                         <div className="row justify-content-start">
@@ -35,7 +36,7 @@ const Slides = () => {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> */}
         </div>
     </div>
 
