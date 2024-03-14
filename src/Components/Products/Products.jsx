@@ -4,7 +4,21 @@ import product2 from '../../img/product-2.jpg';
 import product3 from '../../img/product-3.jpg';
 const Products = () => {
   return (
-    <>
+      <>
+          
+    <div className="container-fluid page-header py-6 wow fadeIn" data-wow-delay="0.1s">
+        <div className="container text-center pt-5 pb-3">
+            <h1 className="display-4 text-white animated slideInDown mb-3">Products</h1>
+            <nav aria-label="breadcrumb animated slideInDown">
+                <ol className="breadcrumb justify-content-center mb-0">
+                    <li className="breadcrumb-item"><a className="text-white" href="#">Home</a></li>
+                    <li className="breadcrumb-item"><a className="text-white" href="#">Pages</a></li>
+                    <li className="breadcrumb-item text-primary active" aria-current="page">Products</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+
      <div className="container-xxl bg-light my-6 py-6 pt-0">
         <div className="container">
             <div className="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style={{maxWidth: "500px"}}>
