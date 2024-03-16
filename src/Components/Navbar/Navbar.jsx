@@ -51,6 +51,9 @@ const Navbar = () => {
             <Link to="/contactus" className="nav-item nav-link">
               Contact
             </Link>
+            <Link to="/login" className="nav-item nav-link">
+              LogIn
+            </Link>
           </div>
           <div className=" d-none d-lg-flex">
             <div className="flex-shrink-0 btn-lg-square border border-light rounded-circle">

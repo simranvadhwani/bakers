@@ -21,8 +21,6 @@ const OurTeam = () => {
         </div>
     </div>
   
-
-
       <div className="container-xxl py-6">
         <div className="container">
             <div className="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style={{maxWidth:"500px"}}>

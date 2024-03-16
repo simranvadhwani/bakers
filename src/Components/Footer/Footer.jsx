@@ -1,13 +1,10 @@
 import React from "react";
-import product1 from '../../img/product-1.jpg';
-import product2 from '../../img/product-2.jpg';
-import product3 from '../../img/product-3.jpg';
-
+import product1 from "../../img/product-1.jpg";
+import product2 from "../../img/product-2.jpg";
+import product3 from "../../img/product-3.jpg";
 
 const Footer = () => {
   const products = [product1, product2, product3];
-  console.log(products);
-
   return (
     <>
       <div
@@ -77,14 +74,14 @@ const Footer = () => {
               <h4 className="text-light mb-4">Photo Gallery</h4>
               <div className="row g-2">
                 {products.map((p, index) => (
-                    <div className="col-4" key={index}>
-                      <img
-                        className="img-fluid bg-light rounded p-1"
-                        src={p}
-                        alt={`product-${index}`}
-                      />
-                    </div>
-                  ))}
+                  <div className="col-4" key={index}>
+                    <img
+                      className="img-fluid bg-light rounded p-1"
+                      src={p}
+                      alt={`product-${index}`}
+                    />
+                  </div>
+                ))}
               </div>
             </div>
           </div>

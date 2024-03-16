@@ -9,11 +9,16 @@ import OurTeam from "./Components/OurTeam/OurTeam";
 import Footer from "./Components/Footer/Footer";
 import Home from "./Components/Home/Home";
 import ContactUs from "./Components/ContactUs/ContactUs";
+import LogIn from "./Components/LogIn/LogIn";
+import ShowNavbar from "./Components/ShowNavbar/ShowNavbar";
+import ShowFooter from "./Components/ShowFooter/ShowFooter";
 
 function App() {
   return (
     <>
-      <Navbar />
+      <ShowNavbar>
+        <Navbar />
+      </ShowNavbar>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/experience" element={<Experience />} />
@@ -22,8 +27,12 @@ function App() {
         <Route path="/services" element={<Services />} />
         <Route path="/ourteam" element={<OurTeam />} />
         <Route path="/contactus" element={<ContactUs />} />
+        <Route path="/login" element={<LogIn />} />
       </Routes>
-      <Footer />
+      <ShowFooter>
+        <Footer />
+      </ShowFooter>
+
       <a
         href="#"
         className="btn btn-lg btn-primary btn-lg-square rounded-circle back-to-top"
