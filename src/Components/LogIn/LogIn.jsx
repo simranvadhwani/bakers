@@ -1,17 +1,26 @@
 import React from "react";
-
+import backgroundImage from "../../img/about-1.jpg";
+import { Link } from "react-router-dom";
 const LogIn = () => {
   return (
     <>
-      <div className="main">
-        <div className="container-xxl py-6">
+      <div
+        className="submain"
+        style={{ backgroundImage: `url(${backgroundImage})` }}
+      >
+        <div className="container-xxl py-4">
           <div className="container">
             <div
               className="text-center mx-auto mb-5 wow fadeInUp"
               data-wow-delay="0.1s"
               style={{ maxWidth: "500px" }}
             >
-              <h3 className="text-primary text-uppercase mb-2">LogIn</h3>
+              <h3
+                className="text-sentencecase mb-2"
+                style={{ color: "#edb354" }}
+              >
+                LogIn to your account
+              </h3>
             </div>
             <div className="row g-0 justify-content-center">
               <div className="col-lg-8 wow fadeInUp" data-wow-delay="0.1s">
@@ -47,6 +56,9 @@ const LogIn = () => {
                       >
                         LogIn
                       </button>
+                      <Link to="/" className="nav-item nav-link active">
+                      Create An Account?
+                      </Link>
                     </div>
                   </div>
                 </form>
@@ -55,6 +67,7 @@ const LogIn = () => {
           </div>
         </div>
       </div>
+     
     </>
   );
 };
