@@ -8,18 +8,15 @@ const LogIn = () => {
         className="submain"
         style={{ backgroundImage: `url(${backgroundImage})` }}
       >
-        <div className="container-xxl py-4">
+        <div className="container-xxl py-6">
           <div className="container">
             <div
               className="text-center mx-auto mb-5 wow fadeInUp"
               data-wow-delay="0.1s"
               style={{ maxWidth: "500px" }}
             >
-              <h3
-                className="text-sentencecase mb-2"
-                style={{ color: "#edb354" }}
-              >
-                LogIn to your account
+              <h3 className="text-uppercase mb-2" style={{ color: "#faeded" }}>
+                Log In to your Account
               </h3>
             </div>
             <div className="row g-0 justify-content-center">
@@ -56,8 +53,12 @@ const LogIn = () => {
                       >
                         LogIn
                       </button>
-                      <Link to="/" className="nav-item nav-link active">
-                      Create An Account?
+                      <Link
+                        to="/register"
+                        className="nav-item nav-link active mt-3"
+                        style={{ color: "#faeded" }}
+                      >
+                        Create An Account?
                       </Link>
                     </div>
                   </div>
@@ -67,7 +68,6 @@ const LogIn = () => {
           </div>
         </div>
       </div>
-     
     </>
   );
 };

@@ -12,6 +12,7 @@ import ContactUs from "./Components/ContactUs/ContactUs";
 import LogIn from "./Components/LogIn/LogIn";
 import ShowNavbar from "./Components/ShowNavbar/ShowNavbar";
 import ShowFooter from "./Components/ShowFooter/ShowFooter";
+import Register from "./Components/Register/Register";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
         <Route path="/ourteam" element={<OurTeam />} />
         <Route path="/contactus" element={<ContactUs />} />
         <Route path="/login" element={<LogIn />} />
+        <Route path="/register" element={<Register />} />
       </Routes>
       <ShowFooter>
         <Footer />
