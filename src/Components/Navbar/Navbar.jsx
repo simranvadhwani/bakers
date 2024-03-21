@@ -2,13 +2,14 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const Navbar = () => {
+  const getToken = localStorage.getItem("token");
   return (
     <>
       <nav
         className="navbar navbar-expand-lg navbar-dark fixed-top py-lg-0 px-lg-5 wow fadeIn"
         data-wow-delay="0.1s"
       >
-        <Link to="/" className="navbar-brand ms-4 ms-lg-0">
+        <Link to="/home" className="navbar-brand ms-4 ms-lg-0">
           <h1 className="text-primary m-0">Baker</h1>
         </Link>
         <button
@@ -21,7 +22,7 @@ const Navbar = () => {
         </button>
         <div className="collapse navbar-collapse" id="navbarCollapse">
           <div className="navbar-nav mx-auto p-4 p-lg-0">
-            <Link to="/" className="nav-item nav-link active">
+            <Link to="/home" className="nav-item nav-link active">
               Home
             </Link>
             <Link to="/aboutus" className="nav-item nav-link">

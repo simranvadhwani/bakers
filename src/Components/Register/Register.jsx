@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import backgroundImage from "../../img/about-1.jpg";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import api from "../../Services/ApiConfigurationService";
 
 const Register = () => {
   const navigate = useNavigate(); // Get the history object from React Router
@@ -12,11 +13,29 @@ const Register = () => {
   } = useForm();
 
   const [isRegistered, setIsRegistered] = useState(false);
-  const onSubmit = (data) => {
-    console.log(data);
-    setIsRegistered(true);
-    // Redirect to login page after successful registration
-    navigate("/login");
+  const [registerError, setRegisterError] = useState(null);
+  const onSubmit = async (data) => {
+    try {
+      console.log(data);
+      const response = await api.post("Account/register", data);
+      console.log("register", response);
+      setIsRegistered(true);
+      // Redirect to login page after successful registration
+      navigate("/login");
+    } catch (error) {
+      if (error.response && error.response.status === 500) {
+        setRegisterError(
+          "User creation failed! Please check user details and try again."
+        );
+      } else {
+        setRegisterError(
+          "An unexpected error occurred. Please try again later."
+        );
+      }
+    } finally {
+      // Reset loading state
+      setIsRegistered(false);
+    }
   };
   return (
     <>
@@ -123,8 +142,11 @@ const Register = () => {
       </div>
       {/* Alert for successful registration */}
       <div className="col-md-4 offset-md-4 mt-3">
-        {isRegistered && isSubmitted && (
-          <div className="alert alert-success">Registration successful!</div>
+        {isSubmitted && !isRegistered && !registerError && (
+          <div className="alert alert-success">User created successfully!</div>
+        )}
+        {registerError && (
+          <div className="alert alert-danger">{registerError}</div>
         )}
       </div>
     </>

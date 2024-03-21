@@ -1,5 +1,10 @@
 import "./App.css";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import Navbar from "./Components/Navbar/Navbar";
 import Experience from "./Components/Experience/Experience";
 import AboutUs from "./Components/AboutUs/AboutUs";
@@ -21,15 +26,16 @@ function App() {
         <Navbar />
       </ShowNavbar>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<LogIn />} />
+        <Route path="/home" element={<Home />} />
         <Route path="/experience" element={<Experience />} />
         <Route path="/aboutus" element={<AboutUs />} />
         <Route path="/products" element={<Products />} />
         <Route path="/services" element={<Services />} />
         <Route path="/ourteam" element={<OurTeam />} />
         <Route path="/contactus" element={<ContactUs />} />
-        <Route path="/login" element={<LogIn />} />
         <Route path="/register" element={<Register />} />
+        <Route path="*" element={<Navigate to="/" />} />{" "}
       </Routes>
       <ShowFooter>
         <Footer />

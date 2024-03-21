@@ -1,19 +1,40 @@
 import React, { useState } from "react";
 import backgroundImage from "../../img/about-1.jpg";
-import { Link} from "react-router-dom";
-import {useForm} from "react-hook-form";
+import { Link, useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import api from "../../Services/ApiConfigurationService";
 const LogIn = () => {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitted },
   } = useForm();
+
   const [isLogin, setIsLogin] = useState(false);
-  const onSubmit = (data) => {
-    console.log(data);
-    setIsLogin(true);
+  const [loginError, setLoginError] = useState(null);
+
+  const onSubmit = async (loginData) => {
+    try {
+      // Set loading state
+      setIsLogin(true);
+      const response = await api.post("Account/login", loginData);
+      const token = response.data.token;
+      // Store the token in local storage
+      localStorage.setItem("token", token);
+      navigate("/home");
+    } catch (error) {
+      if (error.response && error.response.status === 401) {
+        setLoginError("Unauthorized: Please check your credentials.");
+      } else {
+        setLoginError("An unexpected error occurred. Please try again later.");
+      }
+    } finally {
+      // Reset loading state
+      setIsLogin(false);
+    }
   };
- 
+
   return (
     <>
       <div
@@ -33,7 +54,7 @@ const LogIn = () => {
             </div>
             <div className="row g-0 justify-content-center">
               <div className="col-lg-8 wow fadeInUp" data-wow-delay="0.1s">
-              <form onSubmit={handleSubmit(onSubmit)}>
+                <form onSubmit={handleSubmit(onSubmit)}>
                   <div className="row g-3">
                     <div className="col-md-12">
                       <div className="form-floating">
@@ -42,13 +63,13 @@ const LogIn = () => {
                           className="form-control"
                           id="username"
                           placeholder="User Name"
-                          {...register("username",{required:true})}
+                          {...register("username", { required: true })}
                         />
                         <label>UserName</label>
                       </div>
                       {errors.username && (
-                          <p className="text-danger">User Name is Required</p>
-                        )}
+                        <p className="text-danger">User Name is Required</p>
+                      )}
                     </div>
 
                     <div className="col-md-12">
@@ -95,11 +116,13 @@ const LogIn = () => {
         </div>
       </div>
       {/* Alert for successful registration */}
-      <div className="col-md-4 offset-md-4 mt-3">
-        {isLogin && isSubmitted && (
+      {isSubmitted && !isLogin && !loginError && (
+        <div className="col-md-4 offset-md-4 mt-3">
           <div className="alert alert-success">LogIn successful!</div>
-        )}
-      </div>
+
+          {loginError && <div className="alert alert-danger">{loginError}</div>}
+        </div>
+      )}
     </>
   );
 };
