@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import backgroundImage from "../../img/about-1.jpg";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
@@ -13,7 +13,18 @@ const LogIn = () => {
 
   const [isLogin, setIsLogin] = useState(false);
   const [loginError, setLoginError] = useState(null);
-
+  const [loggedIn, setLoggedIn] = useState(false);
+  useEffect(() => {
+    // Check if token exists in local storage
+    const token = localStorage.getItem("token");
+    if (token) {
+      setLoggedIn(true);
+      navigate("/home");
+    } else {
+      // If user is not logged in, redirect to login page
+      navigate("/");
+    }
+  }, [navigate]);
   const onSubmit = async (loginData) => {
     try {
       // Set loading state
@@ -22,6 +33,7 @@ const LogIn = () => {
       const token = response.data.token;
       // Store the token in local storage
       localStorage.setItem("token", token);
+      setLoggedIn(true);
       navigate("/home");
     } catch (error) {
       if (error.response && error.response.status === 401) {

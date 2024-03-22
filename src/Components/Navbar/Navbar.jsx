@@ -1,8 +1,10 @@
-import React from "react";
+import { React, useState } from "react";
 import { Link } from "react-router-dom";
 
 const Navbar = () => {
-  const getToken = localStorage.getItem("token");
+  // const [token, setToken] = useState(localStorage.getItem("token"));
+  // let isToken = !!token;
+  // console.log(isToken);
   return (
     <>
       <nav
@@ -22,6 +24,8 @@ const Navbar = () => {
         </button>
         <div className="collapse navbar-collapse" id="navbarCollapse">
           <div className="navbar-nav mx-auto p-4 p-lg-0">
+            {/* {isToken ? (
+              <> */}
             <Link to="/home" className="nav-item nav-link active">
               Home
             </Link>
@@ -52,9 +56,15 @@ const Navbar = () => {
             <Link to="/contactus" className="nav-item nav-link">
               Contact
             </Link>
-            <Link to="/login" className="nav-item nav-link">
-              LogIn
+            <Link to="/logout" className="nav-item nav-link">
+              Logout
             </Link>
+            {/* </> */}
+            {/* ) : ( */}
+            {/* <Link to="/login" className="nav-item nav-link">
+              LogIn
+            </Link> */}
+            {/* )} */}
           </div>
           <div className=" d-none d-lg-flex">
             <div className="flex-shrink-0 btn-lg-square border border-light rounded-circle">

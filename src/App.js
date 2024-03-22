@@ -18,6 +18,7 @@ import LogIn from "./Components/LogIn/LogIn";
 import ShowNavbar from "./Components/ShowNavbar/ShowNavbar";
 import ShowFooter from "./Components/ShowFooter/ShowFooter";
 import Register from "./Components/Register/Register";
+import Logout from "./Components/Logout/Logout";
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
         <Route path="/ourteam" element={<OurTeam />} />
         <Route path="/contactus" element={<ContactUs />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/logout" element={<Logout />} />
         <Route path="*" element={<Navigate to="/" />} />{" "}
       </Routes>
       <ShowFooter>
