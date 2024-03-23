@@ -141,11 +141,12 @@ const Register = () => {
       </div>
       {/* Alert for successful registration */}
       <div className="col-md-4 offset-md-4 mt-3">
-        {isSubmitted && !isRegistered && !registerError && (
+        {isSubmitted && !isRegistered && !registerError ? (
           <div className="alert alert-success">User created successfully!</div>
-        )}
-        {registerError && (
-          <div className="alert alert-danger">{registerError}</div>
+        ) : (
+          registerError && (
+            <div className="alert alert-danger">{registerError}</div>
+          )
         )}
       </div>
     </>

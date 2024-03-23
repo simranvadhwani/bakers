@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import service1 from "../../img/service-1.jpg";
 import service2 from "../../img/service-2.jpg";
 import { useNavigate } from "react-router-dom";
+import bgImage from "../../img/carousel-1.jpg";
 
 const Services = () => {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -18,8 +19,14 @@ const Services = () => {
   return (
     <>
       <div
-        className="container-fluid page-header py-6 wow fadeIn"
+        className="container-fluid  py-6 wow fadeIn"
         data-wow-delay="0.1s"
+        style={{
+          marginBottom: "6rem",
+          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${bgImage})`,
+          backgroundPosition: "center center",
+          backgroundRepeat: "no-repeat",
+        }}
       >
         <div className="container text-center pt-5 pb-3">
           <h1 className="display-4 text-white animated slideInDown mb-3">
@@ -30,11 +37,6 @@ const Services = () => {
               <li className="breadcrumb-item">
                 <a className="text-white" href="#">
                   Home
-                </a>
-              </li>
-              <li className="breadcrumb-item">
-                <a className="text-white" href="#">
-                  Pages
                 </a>
               </li>
               <li

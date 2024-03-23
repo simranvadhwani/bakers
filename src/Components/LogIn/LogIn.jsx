@@ -34,9 +34,11 @@ const LogIn = () => {
       // Store the token in local storage
       localStorage.setItem("token", token);
       setLoggedIn(true);
+      setLoginError("Login Successful!");
       navigate("/home");
     } catch (error) {
       if (error.response && error.response.status === 401) {
+        setIsLogin(false);
         setLoginError("Unauthorized: Please check your credentials.");
       } else {
         setLoginError("An unexpected error occurred. Please try again later.");
@@ -128,11 +130,9 @@ const LogIn = () => {
         </div>
       </div>
       {/* Alert for successful registration */}
-      {isSubmitted && !isLogin && !loginError && (
+      {isSubmitted && loginError && (
         <div className="col-md-4 offset-md-4 mt-3">
-          <div className="alert alert-success">LogIn successful!</div>
-
-          {loginError && <div className="alert alert-danger">{loginError}</div>}
+          <div className="alert alert-danger">{loginError}</div>
         </div>
       )}
     </>

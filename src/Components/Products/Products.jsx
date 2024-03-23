@@ -1,25 +1,53 @@
 import React, { useState, useEffect } from "react";
 import product1 from "../../img/product-1.jpg";
-import product2 from "../../img/product-2.jpg";
-import product3 from "../../img/product-3.jpg";
+import bgImage from "../../img/carousel-1.jpg";
 import { useNavigate } from "react-router-dom";
+import api from "../../Services/ApiConfigurationService";
+
 const Products = () => {
   const [loggedIn, setLoggedIn] = useState(false);
+  const [products, setProducts] = useState([]);
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
+  const token = localStorage.getItem("token");
   useEffect(() => {
     // Check if token exists in local storage
-    const token = localStorage.getItem("token");
     if (token) {
       setLoggedIn(true);
     } else {
       navigate("/");
     }
-  });
+  }, []);
+
+  useEffect(() => {
+    if (loggedIn) {
+      api
+        .get("Product/products", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((response) => {
+          setProducts(response.data);
+        })
+        .catch((error) => {
+          setError(error.message);
+        });
+    }
+  }, [loggedIn]);
+
+  console.log(products);
   return (
     <>
       <div
-        className="container-fluid page-header py-6 wow fadeIn"
+        className="container-fluid py-6 wow fadeIn"
         data-wow-delay="0.1s"
+        style={{
+          marginBottom: "6rem",
+          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${bgImage})`,
+          backgroundPosition: "center center",
+          backgroundRepeat: "no-repeat",
+        }}
       >
         <div className="container text-center pt-5 pb-3">
           <h1 className="display-4 text-white animated slideInDown mb-3">
@@ -30,11 +58,6 @@ const Products = () => {
               <li className="breadcrumb-item">
                 <a className="text-white" href="#">
                   Home
-                </a>
-              </li>
-              <li className="breadcrumb-item">
-                <a className="text-white" href="#">
-                  Pages
                 </a>
               </li>
               <li
@@ -63,90 +86,37 @@ const Products = () => {
             </h1>
           </div>
           <div className="row g-4">
-            <div
-              className="col-lg-4 col-md-6 wow fadeInUp"
-              data-wow-delay="0.1s"
-            >
-              <div className="product-item d-flex flex-column bg-white rounded overflow-hidden h-100">
-                <div className="text-center p-4">
-                  <div className="d-inline-block border border-primary rounded-pill px-3 mb-3">
-                    $11 - $99
+            {products.map((item, index) => (
+              <div
+                className="col-lg-4 col-md-6 wow fadeInUp"
+                data-wow-delay="0.1s"
+              >
+                <div
+                  className="product-item d-flex flex-column bg-white rounded overflow-hidden h-100"
+                  key={index}
+                >
+                  <div className="text-center p-4">
+                    <div className="d-inline-block border border-primary rounded-pill px-3 mb-3">
+                      {`₹ ${item.price}`}
+                      {/* Use curly braces to interpolate JavaScript expressions */}
+                    </div>
+                    <h3 className="mb-3">{item.name}</h3>
+                    <span>{item.discription}</span>
                   </div>
-                  <h3 className="mb-3">Cake</h3>
-                  <span>
-                    Tempor erat elitr rebum at clita dolor diam ipsum sit diam
-                    amet diam et eos
-                  </span>
-                </div>
-                <div className="position-relative mt-auto">
-                  <img className="img-fluid" src={product1} alt={product1} />
-                  <div className="product-overlay">
-                    <a
-                      className="btn btn-lg-square btn-outline-light rounded-circle"
-                      href=""
-                    >
-                      <i className="fa fa-eye text-primary"></i>
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div
-              className="col-lg-4 col-md-6 wow fadeInUp"
-              data-wow-delay="0.3s"
-            >
-              <div className="product-item d-flex flex-column bg-white rounded overflow-hidden h-100">
-                <div className="text-center p-4">
-                  <div className="d-inline-block border border-primary rounded-pill pt-1 px-3 mb-3">
-                    $11 - $99
-                  </div>
-                  <h3 className="mb-3">Bread</h3>
-                  <span>
-                    Tempor erat elitr rebum at clita dolor diam ipsum sit diam
-                    amet diam et eos
-                  </span>
-                </div>
-                <div className="position-relative mt-auto">
-                  <img className="img-fluid" src={product2} alt={product2} />
-                  <div className="product-overlay">
-                    <a
-                      className="btn btn-lg-square btn-outline-light rounded-circle"
-                      href=""
-                    >
-                      <i className="fa fa-eye text-primary"></i>
-                    </a>
+                  <div className="position-relative mt-auto">
+                    <img className="img-fluid" src={product1} alt={product1} />
+                    <div className="product-overlay">
+                      <a
+                        className="btn btn-lg-square btn-outline-light rounded-circle"
+                        href=""
+                      >
+                        <i className="fa fa-eye text-primary"></i>
+                      </a>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <div
-              className="col-lg-4 col-md-6 wow fadeInUp"
-              data-wow-delay="0.5s"
-            >
-              <div className="product-item d-flex flex-column bg-white rounded overflow-hidden h-100">
-                <div className="text-center p-4">
-                  <div className="d-inline-block border border-primary rounded-pill pt-1 px-3 mb-3">
-                    $11 - $99
-                  </div>
-                  <h4 className="mb-3">Cookies</h4>
-                  <span>
-                    Tempor erat elitr rebum at clita dolor diam ipsum sit diam
-                    amet diam et eos
-                  </span>
-                </div>
-                <div className="position-relative mt-auto">
-                  <img className="img-fluid" src={product3} alt={product3} />
-                  <div className="product-overlay">
-                    <a
-                      className="btn btn-lg-square btn-outline-light rounded-circle"
-                      href=""
-                    >
-                      <i className="fa fa-eye text-primary"></i>
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </div>
