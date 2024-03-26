@@ -2,6 +2,7 @@ import React from "react";
 import product1 from "../../img/product-1.jpg";
 import product2 from "../../img/product-2.jpg";
 import product3 from "../../img/product-3.jpg";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   const products = [product1, product2, product3];
@@ -54,21 +55,21 @@ const Footer = () => {
             </div>
             <div className="col-lg-3 col-md-6">
               <h4 className="text-light mb-4">Quick Links</h4>
-              <a className="btn btn-link" href="">
+              <Link className="btn btn-link" to="/aboutus">
                 About Us
-              </a>
-              <a className="btn btn-link" href="">
+              </Link>
+              <Link className="btn btn-link" to="/contactus">
                 Contact Us
-              </a>
-              <a className="btn btn-link" href="">
+              </Link>
+              <Link className="btn btn-link" to="/services">
                 Our Services
-              </a>
-              <a className="btn btn-link" href="">
-                Terms & Condition
-              </a>
-              <a className="btn btn-link" href="">
-                Support
-              </a>
+              </Link>
+              <Link className="btn btn-link" to="/products">
+                Products
+              </Link>
+              <Link className="btn btn-link" to="/ourteam">
+                Our Team
+              </Link>
             </div>
             <div className="col-lg-3 col-md-6">
               <h4 className="text-light mb-4">Photo Gallery</h4>
