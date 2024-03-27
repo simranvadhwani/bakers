@@ -1,11 +1,6 @@
 import "./App.css";
 import React, { useState, useEffect } from "react";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Navigate,
-} from "react-router-dom";
+import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import Navbar from "./Components/Navbar/Navbar";
 import Experience from "./Components/Experience/Experience";
 import AboutUs from "./Components/AboutUs/AboutUs";
@@ -26,7 +21,7 @@ import { jwtDecode as jwt_decode } from "jwt-decode";
 function App() {
   const [isAdmin, setIsAdmin] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
-
+  const navigate = useNavigate();
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
@@ -36,23 +31,24 @@ function App() {
       // Check if user has admin role
       if (userRoles && userRoles.includes("Admin")) {
         setIsAdmin(true);
+        navigate("/admin-dashboard");
       }
 
       setLoggedIn(true);
     }
-  }, []);
+  }, [navigate]);
   return (
     <>
       {isAdmin ? (
         <Routes>
-          <Route path="/adminhome" element={<AdminHome />} />
+          <Route path="/admin-dashboard" element={<AdminHome />} />
+          <Route path="/" element={<LogIn />} />
         </Routes>
       ) : (
         <>
           <ShowNavbar>
             <Navbar />
           </ShowNavbar>
-
           <Routes>
             <Route path="/" element={<LogIn />} />
             <Route path="/home" element={<Home />} />
@@ -66,12 +62,12 @@ function App() {
             <Route path="/logout" element={<Logout />} />
             <Route path="*" element={<Navigate to="/" />} />
           </Routes>
-
           <ShowFooter>
             <Footer />
           </ShowFooter>
         </>
       )}
+
       <a
         href="#"
         className="btn btn-lg btn-primary btn-lg-square rounded-circle back-to-top"
