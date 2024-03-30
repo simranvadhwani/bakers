@@ -3,7 +3,7 @@ import team1 from "../../img/team-1.jpg";
 import team2 from "../../img/team-2.jpg";
 import team3 from "../../img/team-3.jpg";
 import team4 from "../../img/team-4.jpg";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import bgImage from "../../img/carousel-1.jpg";
 
 const OurTeam = () => {
@@ -37,9 +37,9 @@ const OurTeam = () => {
           <nav aria-label="breadcrumb animated slideInDown">
             <ol className="breadcrumb justify-content-center mb-0">
               <li className="breadcrumb-item">
-                <a className="text-white" href="#">
+                <Link className="text-white" to="/home">
                   Home
-                </a>
+                </Link>
               </li>
               <li className="breadcrumb-item">
                 <a className="text-white" href="#">

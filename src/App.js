@@ -17,6 +17,8 @@ import Register from "./Components/Register/Register";
 import Logout from "./Components/Logout/Logout";
 import AdminHome from "./AdminComponents/AdminHome/AdminHome";
 import { jwtDecode as jwt_decode } from "jwt-decode";
+import Cart from "./Components/Cart/Cart";
+import ViewProduct from "./Components/ViewProduct/ViewProduct";
 
 function App() {
   const [isAdmin, setIsAdmin] = useState(false);
@@ -58,6 +60,8 @@ function App() {
             <Route path="/services" element={<Services />} />
             <Route path="/ourteam" element={<OurTeam />} />
             <Route path="/contactus" element={<ContactUs />} />
+            <Route path="/viewproduct" element={<ViewProduct />} />
+            <Route path="/cart" element={<Cart />} />
             <Route path="/register" element={<Register />} />
             <Route path="/logout" element={<Logout />} />
             <Route path="*" element={<Navigate to="/" />} />

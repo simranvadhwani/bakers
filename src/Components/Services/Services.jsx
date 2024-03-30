@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import service1 from "../../img/service-1.jpg";
 import service2 from "../../img/service-2.jpg";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import bgImage from "../../img/carousel-1.jpg";
 
 const Services = () => {
@@ -35,9 +35,9 @@ const Services = () => {
           <nav aria-label="breadcrumb animated slideInDown">
             <ol className="breadcrumb justify-content-center mb-0">
               <li className="breadcrumb-item">
-                <a className="text-white" href="#">
+                <Link className="text-white" to="/home">
                   Home
-                </a>
+                </Link>
               </li>
               <li
                 className="breadcrumb-item text-primary active"

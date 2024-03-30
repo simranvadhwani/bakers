@@ -1,20 +1,10 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import React from "react";
 import about1 from "../../img/about-1.jpg";
 import about2 from "../../img/about-2.jpg";
 import bgImage from "../../img/carousel-1.jpg";
-const AboutUs = () => {
-  const [loggedIn, setLoggedIn] = useState(false);
-  const navigate = useNavigate();
-  useEffect(() => {
-    // Check if token exists in local storage
-    const token = localStorage.getItem("token");
-    if (token) {
-      setLoggedIn(true);
-    } else {
-      navigate("/");
-    }
-  });
+import { Link } from "react-router-dom";
+
+const ViewProduct = () => {
   return (
     <>
       <div
@@ -29,20 +19,20 @@ const AboutUs = () => {
       >
         <div className="container text-center pt-5 pb-3">
           <h1 className="display-4 text-white animated slideInDown mb-3">
-            About Us
+            Product Details
           </h1>
           <nav aria-label="breadcrumb animated slideInDown">
             <ol className="breadcrumb justify-content-center mb-0">
               <li class="breadcrumb-item">
-                <Link className="text-white" to="/home">
-                  Home
+                <Link className="text-white" to="/products">
+                  Products
                 </Link>
               </li>
               <li
                 className="breadcrumb-item text-primary active"
                 aria-current="page"
               >
-                About
+                Product Details
               </li>
             </ol>
           </nav>
@@ -72,7 +62,9 @@ const AboutUs = () => {
             </div>
             <div className="col-lg-6 wow fadeInUp" data-wow-delay="0.5s">
               <div className="h-100">
-                <p className="text-primary text-uppercase mb-2">// About Us</p>
+                <p className="text-primary text-uppercase mb-2">
+                  // Product Details
+                </p>
                 <h1 className="display-6 mb-4">
                   We Bake Every Item From The Core Of Our Hearts
                 </h1>
@@ -116,4 +108,4 @@ const AboutUs = () => {
   );
 };
 
-export default AboutUs;
+export default ViewProduct;

@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from "react";
 import product1 from "../../img/product-1.jpg";
 import bgImage from "../../img/carousel-1.jpg";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import api from "../../Services/ApiConfigurationService";
 
 const Products = () => {
   const [loggedIn, setLoggedIn] = useState(false);
   const [products, setProducts] = useState([]);
+  const [productDetails, setProductDetails] = useState(null);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
+
   useEffect(() => {
     // Check if token exists in local storage
     if (token) {
@@ -36,7 +38,24 @@ const Products = () => {
     }
   }, [loggedIn]);
 
-  console.log(products);
+  const getProductDetails = (id) => {
+    if (id) {
+      api
+        .get(`Product/productGetById?id=${id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((response) => {
+          console.log(response.data);
+          setProductDetails(response.data);
+        })
+        .catch((error) => {
+          setError(error.message);
+        });
+    }
+  };
+
   return (
     <>
       <div
@@ -56,9 +75,9 @@ const Products = () => {
           <nav aria-label="breadcrumb animated slideInDown">
             <ol className="breadcrumb justify-content-center mb-0">
               <li className="breadcrumb-item">
-                <a className="text-white" href="#">
+                <Link className="text-white" to="/home">
                   Home
-                </a>
+                </Link>
               </li>
               <li
                 className="breadcrumb-item text-primary active"
@@ -106,12 +125,19 @@ const Products = () => {
                   <div className="position-relative mt-auto">
                     <img className="img-fluid" src={product1} alt={product1} />
                     <div className="product-overlay">
-                      <a
+                      <Link
                         className="btn btn-lg-square btn-outline-light rounded-circle"
-                        href=""
+                        to="/viewproduct"
+                        onClick={() => getProductDetails(item.productId)}
                       >
                         <i className="fa fa-eye text-primary"></i>
-                      </a>
+                      </Link>
+                      <Link
+                        className="btn btn-lg-square btn-outline-light rounded-circle"
+                        to="/cart"
+                      >
+                        <i class="fas fa-shopping-cart text-primary"></i>
+                      </Link>
                     </div>
                   </div>
                 </div>
