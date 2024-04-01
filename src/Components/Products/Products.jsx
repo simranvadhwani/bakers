@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, createContext } from "react";
 import product1 from "../../img/product-1.jpg";
 import bgImage from "../../img/carousel-1.jpg";
 import { useNavigate, Link } from "react-router-dom";
@@ -7,11 +7,10 @@ import api from "../../Services/ApiConfigurationService";
 const Products = () => {
   const [loggedIn, setLoggedIn] = useState(false);
   const [products, setProducts] = useState([]);
-  const [productDetails, setProductDetails] = useState(null);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
-
+  const [productDetails, setProductDetails] = useState({});
   useEffect(() => {
     // Check if token exists in local storage
     if (token) {
@@ -47,15 +46,17 @@ const Products = () => {
           },
         })
         .then((response) => {
-          console.log(response.data);
           setProductDetails(response.data);
+          navigate("/viewproduct", {
+            state: { productDetails: response.data },
+          });
         })
         .catch((error) => {
           setError(error.message);
         });
     }
   };
-
+  console.log(productDetails, "setproduct");
   return (
     <>
       <div
@@ -127,7 +128,6 @@ const Products = () => {
                     <div className="product-overlay">
                       <Link
                         className="btn btn-lg-square btn-outline-light rounded-circle"
-                        to="/viewproduct"
                         onClick={() => getProductDetails(item.productId)}
                       >
                         <i className="fa fa-eye text-primary"></i>

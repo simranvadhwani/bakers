@@ -2,9 +2,12 @@ import React from "react";
 import about1 from "../../img/about-1.jpg";
 import about2 from "../../img/about-2.jpg";
 import bgImage from "../../img/carousel-1.jpg";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const ViewProduct = () => {
+  const location = useLocation();
+  const productDetails = location.state ? location.state.productDetails : null;
+
   return (
     <>
       <div
@@ -68,11 +71,7 @@ const ViewProduct = () => {
                 <h1 className="display-6 mb-4">
                   We Bake Every Item From The Core Of Our Hearts
                 </h1>
-                <p>
-                  Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit.
-                  Aliqu diam amet diam et eos. Clita erat ipsum et lorem et sit,
-                  sed stet lorem sit clita duo justo magna dolore erat amet
-                </p>
+                <p>{productDetails.discription}</p>
                 <p>
                   Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit.
                   Aliqu diam amet diam et eos. Clita erat ipsum et lorem et sit,
