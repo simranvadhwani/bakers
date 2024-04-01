@@ -2,6 +2,7 @@ import React, { useState, useEffect, createContext } from "react";
 import product1 from "../../img/product-1.jpg";
 import bgImage from "../../img/carousel-1.jpg";
 import { useNavigate, Link } from "react-router-dom";
+import ViewProduct from "../ViewProduct/ViewProduct";
 import api from "../../Services/ApiConfigurationService";
 
 const Products = () => {
@@ -56,7 +57,6 @@ const Products = () => {
         });
     }
   };
-  console.log(productDetails, "setproduct");
   return (
     <>
       <div

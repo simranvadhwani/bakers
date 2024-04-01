@@ -6,8 +6,7 @@ import { Link, useLocation } from "react-router-dom";
 
 const ViewProduct = () => {
   const location = useLocation();
-  const productDetails = location.state ? location.state.productDetails : null;
-
+  const { productDetails } = location.state;
   return (
     <>
       <div
@@ -68,19 +67,12 @@ const ViewProduct = () => {
                 <p className="text-primary text-uppercase mb-2">
                   // Product Details
                 </p>
-                <h1 className="display-6 mb-4">
-                  We Bake Every Item From The Core Of Our Hearts
-                </h1>
+                <h1 className="display-6 mb-4">{productDetails.name}</h1>
                 <p>{productDetails.discription}</p>
-                <p>
-                  Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit.
-                  Aliqu diam amet diam et eos. Clita erat ipsum et lorem et sit,
-                  sed stet lorem sit clita duo justo magna dolore erat amet
-                </p>
                 <div className="row g-2 mb-4">
                   <div className="col-sm-6">
-                    <i className="fa fa-check text-primary me-2"></i>Quality
-                    Products
+                    <i className="fa fa-check text-primary me-2"></i>
+                    {`₹ ${productDetails.price}`}
                   </div>
                   <div className="col-sm-6">
                     <i className="fa fa-check text-primary me-2"></i>Custom
@@ -95,9 +87,6 @@ const ViewProduct = () => {
                     Delivery
                   </div>
                 </div>
-                <a className="btn btn-primary rounded-pill py-3 px-5" href="">
-                  Read More
-                </a>
               </div>
             </div>
           </div>
