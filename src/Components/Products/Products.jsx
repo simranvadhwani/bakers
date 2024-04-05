@@ -12,6 +12,7 @@ const Products = () => {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const [productDetails, setProductDetails] = useState({});
+  const [productAddtoCart, setproductAddtoCarts] = useState({});
   useEffect(() => {
     // Check if token exists in local storage
     if (token) {
@@ -22,21 +23,21 @@ const Products = () => {
   }, []);
 
   useEffect(() => {
-    if (loggedIn) {
-      api
-        .get("Product/products", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
-        .then((response) => {
-          setProducts(response.data);
-        })
-        .catch((error) => {
-          setError(error.message);
-        });
-    }
-  }, [loggedIn]);
+    // if (loggedIn) {
+    api
+      .get("Product/products", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        setProducts(response.data);
+      })
+      .catch((error) => {
+        setError(error.message);
+      });
+    // }
+  }, []);
 
   const getProductDetails = (id) => {
     if (id) {
@@ -50,6 +51,25 @@ const Products = () => {
           setProductDetails(response.data);
           navigate("/viewproduct", {
             state: { productDetails: response.data },
+          });
+        })
+        .catch((error) => {
+          setError(error.message);
+        });
+    }
+  };
+  const getProductAddToCart = (id) => {
+    if (id) {
+      api
+        .get(`Product/productGetById?id=${id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((response) => {
+          setproductAddtoCarts(response.data);
+          navigate("/cart", {
+            state: { productAddtoCart: response.data },
           });
         })
         .catch((error) => {
@@ -134,7 +154,7 @@ const Products = () => {
                       </Link>
                       <Link
                         className="btn btn-lg-square btn-outline-light rounded-circle"
-                        to="/cart"
+                        onClick={() => getProductAddToCart(item.productId)}
                       >
                         <i class="fas fa-shopping-cart text-primary"></i>
                       </Link>
