@@ -1,13 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 import about1 from "../../img/about-1.jpg";
 import about2 from "../../img/about-2.jpg";
 import bgImage from "../../img/carousel-1.jpg";
 import { Link, useLocation } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { incNumber, decNumber, reset } from "../../Actions";
 
 const Cart = () => {
+  const { number, price } = useSelector((state) => state.changeTheNumber);
+  const dispatch = useDispatch();
   const location = useLocation();
-  console.log(location, "loc");
   const { productAddtoCart } = location.state;
+
+  useEffect(() => {
+    dispatch(reset());
+  }, [dispatch]);
   return (
     <>
       <div
@@ -79,24 +86,25 @@ const Cart = () => {
                         <div className="d-flex flex-row">
                           <button
                             className="btn btn-link px-2"
-                            onclick="this.parentNode.querySelector('input[type=number]').stepDown()"
+                            onClick={() =>
+                              dispatch(decNumber(productAddtoCart.price))
+                            }
                           >
                             <i className="fas fa-minus"></i>
                           </button>
 
                           <input
-                            id="form1"
-                            min="0"
-                            name="quantity"
-                            value="2"
-                            type="number"
+                            value={number}
+                            type="text"
                             className="form-control form-control-sm"
                             style={{ width: "50px" }}
                           />
 
                           <button
                             className="btn btn-link px-2"
-                            onclick="this.parentNode.querySelector('input[type=number]').stepUp()"
+                            onClick={() =>
+                              dispatch(incNumber(productAddtoCart.price))
+                            }
                           >
                             <i className="fas fa-plus"></i>
                           </button>
@@ -104,7 +112,8 @@ const Cart = () => {
                       </td>
                       <td className="align-middle">
                         <p className="mb-0" style={{ fontWeight: "500" }}>
-                          {`₹${productAddtoCart.price}`}
+                          {/* {`₹${productAddtoCart.price}`} */}
+                          {`₹${price}`}
                         </p>
                       </td>
                     </tr>
@@ -113,7 +122,7 @@ const Cart = () => {
               </div>
             </div>
 
-            <div
+            {/* <div
               className="card shadow-2-strong mb-5 mb-lg-0"
               style={{ borderRadius: "16px" }}
             >
@@ -282,7 +291,7 @@ const Cart = () => {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </section>
