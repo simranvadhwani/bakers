@@ -68,15 +68,17 @@ const Products = () => {
         })
         .then((response) => {
           setproductAddtoCarts(response.data);
-          navigate("/cart", {
-            state: { productAddtoCart: response.data },
-          });
+
+          // navigate("/cart", {
+          //   state: { productAddtoCart: response.data },
+          // });
         })
         .catch((error) => {
           setError(error.message);
         });
     }
   };
+
   return (
     <>
       <div
@@ -152,12 +154,12 @@ const Products = () => {
                       >
                         <i className="fa fa-eye text-primary"></i>
                       </Link>
-                      <Link
+                      {/* <Link
                         className="btn btn-lg-square btn-outline-light rounded-circle"
                         onClick={() => getProductAddToCart(item.productId)}
                       >
                         <i class="fas fa-shopping-cart text-primary"></i>
-                      </Link>
+                      </Link> */}
                     </div>
                   </div>
                 </div>

@@ -56,9 +56,11 @@ const Navbar = () => {
             </Link>
           </div>
           <div className=" d-none d-lg-flex">
-            <div className="flex-shrink-0 btn-lg-square border border-light rounded-circle">
+            <div className="flex-shrink-0 btn-lg">
               <Link to="/cart">
-                <i class="fas fa-shopping-cart text-primary"></i>
+                <i class="fas fa-shopping-cart text-primary">
+                  <span class="badge">1</span>
+                </i>
               </Link>
             </div>
           </div>

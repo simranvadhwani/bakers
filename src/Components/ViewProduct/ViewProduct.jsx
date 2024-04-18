@@ -3,8 +3,12 @@ import about1 from "../../img/about-1.jpg";
 import about2 from "../../img/about-2.jpg";
 import bgImage from "../../img/carousel-1.jpg";
 import { Link, useLocation } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { incNumber, decNumber, reset } from "../../Actions";
 
 const ViewProduct = () => {
+  const { number, price } = useSelector((state) => state.changeTheNumber);
+  const dispatch = useDispatch();
   const location = useLocation();
   const { productDetails } = location.state;
   return (
@@ -85,6 +89,52 @@ const ViewProduct = () => {
                   <div className="col-sm-6">
                     <i className="fa fa-check text-primary me-2"></i>Home
                     Delivery
+                  </div>
+                  <div class="table-responsive">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th scope="col">Quantity</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td className="align-middle">
+                            <div className="d-flex flex-row">
+                              <button
+                                className="btn btn-link px-2"
+                                onClick={() => dispatch(decNumber())}
+                              >
+                                <i className="fas fa-minus"></i>
+                              </button>
+
+                              <input
+                                value={number}
+                                type="text"
+                                className="form-control form-control-sm"
+                                style={{ width: "50px" }}
+                              />
+
+                              <button
+                                className="btn btn-link px-2"
+                                onClick={() => dispatch(incNumber())}
+                              >
+                                <i className="fas fa-plus"></i>
+                              </button>
+                            </div>
+                          </td>
+                          <td className="align-middle">
+                            <Link
+                              className="btn btn-primary rounded-pill py-3 px-5"
+                              href=""
+                            >
+                              Add To Cart
+                              <i class="fas fa-shopping-cart"></i>
+                            </Link>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
                   </div>
                 </div>
               </div>

@@ -417,5 +417,19 @@ h6,
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  border:solid 3px #111111;
+  border: solid 3px #111111;
+}
+.badge {
+  position: absolute;
+  display: inline-block;
+  min-width: 10px;
+  padding: 3px 7px;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+  color: white;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: 10px;
 }
