@@ -58,27 +58,7 @@ const Products = () => {
         });
     }
   };
-  const getProductAddToCart = (id) => {
-    if (id) {
-      api
-        .get(`Product/productGetById?id=${id}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
-        .then((response) => {
-          setproductAddtoCarts(response.data);
-
-          // navigate("/cart", {
-          //   state: { productAddtoCart: response.data },
-          // });
-        })
-        .catch((error) => {
-          setError(error.message);
-        });
-    }
-  };
-
+  console.log(productDetails, "prroo");
   return (
     <>
       <div

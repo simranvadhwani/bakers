@@ -1,16 +1,49 @@
-import React from "react";
 import about1 from "../../img/about-1.jpg";
 import about2 from "../../img/about-2.jpg";
 import bgImage from "../../img/carousel-1.jpg";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { incNumber, decNumber, reset } from "../../Actions";
+import api from "../../Services/ApiConfigurationService";
+import React, { useState, useEffect, createContext } from "react";
 
 const ViewProduct = () => {
+  const token = localStorage.getItem("token");
+  const navigate = useNavigate();
   const { number, price } = useSelector((state) => state.changeTheNumber);
   const dispatch = useDispatch();
   const location = useLocation();
-  const { productDetails } = location.state;
+  const productDetails = location.state.productDetails;
+  const [error, setError] = useState();
+  const [success, setSuccess] = useState();
+
+  const AddToCart = () => {
+    if (productDetails !== null) {
+      api
+        .post(
+          `Product/addProductToCart`,
+          {
+            productId: productDetails.productId,
+            Name: productDetails.name,
+            Quantity: number,
+            Price: productDetails.price,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
+        .then((response) => {
+          setSuccess(response);
+          navigate("/cart");
+        })
+        .catch((error) => {
+          setError(error.message);
+        });
+    }
+  };
+
   return (
     <>
       <div
@@ -126,7 +159,7 @@ const ViewProduct = () => {
                           <td className="align-middle">
                             <Link
                               className="btn btn-primary rounded-pill py-3 px-5"
-                              href=""
+                              onClick={() => AddToCart()}
                             >
                               Add To Cart
                               <i class="fas fa-shopping-cart"></i>
