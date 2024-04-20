@@ -9,8 +9,8 @@ import { incNumber, decNumber, reset } from "../../Actions";
 const Cart = () => {
   const { number, price } = useSelector((state) => state.changeTheNumber);
   const dispatch = useDispatch();
-  const location = useLocation();
-  const { productAddtoCart } = location.state;
+  // const location = useLocation();
+  // const { productAddtoCart } = location.state;
 
   useEffect(() => {
     dispatch(reset());
@@ -75,9 +75,9 @@ const Cart = () => {
                             alt="Book"
                           />
                           <div className="flex-column ms-4">
-                            <p className="mb-2">{productAddtoCart.name}</p>
+                            {/* <p className="mb-2">{productAddtoCart.name}</p> */}
                             <p className="mb-0">
-                              {productAddtoCart.discription}
+                              {/* {productAddtoCart.discription} */}
                             </p>
                           </div>
                         </div>
@@ -86,9 +86,7 @@ const Cart = () => {
                         <div className="d-flex flex-row">
                           <button
                             className="btn btn-link px-2"
-                            onClick={() =>
-                              dispatch(decNumber(productAddtoCart.price))
-                            }
+                            onClick={() => dispatch(decNumber())}
                           >
                             <i className="fas fa-minus"></i>
                           </button>
@@ -102,9 +100,7 @@ const Cart = () => {
 
                           <button
                             className="btn btn-link px-2"
-                            onClick={() =>
-                              dispatch(incNumber(productAddtoCart.price))
-                            }
+                            onClick={() => dispatch(incNumber())}
                           >
                             <i className="fas fa-plus"></i>
                           </button>
@@ -113,7 +109,7 @@ const Cart = () => {
                       <td className="align-middle">
                         <p className="mb-0" style={{ fontWeight: "500" }}>
                           {/* {`₹${productAddtoCart.price}`} */}
-                          {`₹${price}`}
+                          {/* {`₹${price}`} */}
                         </p>
                       </td>
                     </tr>

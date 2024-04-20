@@ -13,7 +13,8 @@ const ViewProduct = () => {
   const { number, price } = useSelector((state) => state.changeTheNumber);
   const dispatch = useDispatch();
   const location = useLocation();
-  const productDetails = location.state.productDetails;
+  const { state } = location;
+  const productDetails = state ? state.productDetails : null;
   const [error, setError] = useState();
   const [success, setSuccess] = useState();
 
@@ -35,7 +36,7 @@ const ViewProduct = () => {
           }
         )
         .then((response) => {
-          setSuccess(response);
+          setSuccess(response.message);
           navigate("/cart");
         })
         .catch((error) => {
