@@ -12,9 +12,6 @@ const Cart = () => {
   // const location = useLocation();
   // const { productAddtoCart } = location.state;
 
-  useEffect(() => {
-    dispatch(reset());
-  }, [dispatch]);
   return (
     <>
       <div

@@ -3,7 +3,7 @@ import about2 from "../../img/about-2.jpg";
 import bgImage from "../../img/carousel-1.jpg";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { incNumber, decNumber, reset } from "../../Actions";
+import { incNumber, decNumber, reset, updateCartLength } from "../../Actions";
 import api from "../../Services/ApiConfigurationService";
 import React, { useState, useEffect, createContext } from "react";
 
@@ -16,7 +16,6 @@ const ViewProduct = () => {
   const { state } = location;
   const productDetails = state ? state.productDetails : null;
   const [error, setError] = useState();
-  const [success, setSuccess] = useState();
 
   const AddToCart = () => {
     if (productDetails !== null) {
@@ -36,15 +35,14 @@ const ViewProduct = () => {
           }
         )
         .then((response) => {
-          setSuccess(response.message);
-          navigate("/cart");
+          debugger;
+          dispatch(updateCartLength(response.data.cartLength));
         })
         .catch((error) => {
           setError(error.message);
         });
     }
   };
-
   return (
     <>
       <div

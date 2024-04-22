@@ -13,3 +13,8 @@ export const decNumber = (amount) => {
 export const reset = () => ({
   type: "RESET",
 });
+
+export const updateCartLength = (length) => ({
+  type: "UPDATE_CART_LENGTH",
+  payload: length,
+});
