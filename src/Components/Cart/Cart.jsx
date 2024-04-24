@@ -1,17 +1,36 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import about1 from "../../img/about-1.jpg";
 import about2 from "../../img/about-2.jpg";
 import bgImage from "../../img/carousel-1.jpg";
 import { Link, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { incNumber, decNumber, reset } from "../../Actions";
-
+import api from "../../Services/ApiConfigurationService";
 const Cart = () => {
+  const token = localStorage.getItem("token");
+  const [error, setError] = useState();
   const { number, price } = useSelector((state) => state.changeTheNumber);
   const dispatch = useDispatch();
-  // const location = useLocation();
-  // const { productAddtoCart } = location.state;
+  const [cartData, setCartData] = useState([]);
 
+  useEffect(() => {
+    if (token) {
+      api
+        .get(`Product/getCartProducts`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((response) => {
+          setCartData(response.data);
+        })
+        .catch((error) => {
+          setError(error.message);
+        });
+    }
+  }, [token]);
+
+  console.log(cartData, "cartData");
   return (
     <>
       <div
@@ -62,54 +81,53 @@ const Cart = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <th scope="row">
-                        <div className="d-flex align-items-center">
-                          <img
-                            src={about1}
-                            className="img-fluid rounded-3"
-                            style={{ width: "120px" }}
-                            alt="Book"
-                          />
-                          <div className="flex-column ms-4">
-                            {/* <p className="mb-2">{productAddtoCart.name}</p> */}
-                            <p className="mb-0">
-                              {/* {productAddtoCart.discription} */}
-                            </p>
+                    {cartData.map((item, index) => (
+                      <tr>
+                        <th scope="row">
+                          <div className="d-flex align-items-center">
+                            <img
+                              src={about1}
+                              className="img-fluid rounded-3"
+                              style={{ width: "120px" }}
+                              alt="Book"
+                            />
+                            <div className="flex-column ms-4">
+                              <p className="mb-2">{item.name}</p>
+                              <p className="mb-0">{item.discription}</p>
+                            </div>
                           </div>
-                        </div>
-                      </th>
-                      <td className="align-middle">
-                        <div className="d-flex flex-row">
-                          <button
-                            className="btn btn-link px-2"
-                            onClick={() => dispatch(decNumber())}
-                          >
-                            <i className="fas fa-minus"></i>
-                          </button>
+                        </th>
+                        <td className="align-middle">
+                          <div className="d-flex flex-row">
+                            <button
+                              className="btn btn-link px-2"
+                              onClick={() => dispatch(decNumber(item.price))}
+                            >
+                              <i className="fas fa-minus"></i>
+                            </button>
 
-                          <input
-                            value={number}
-                            type="text"
-                            className="form-control form-control-sm"
-                            style={{ width: "50px" }}
-                          />
+                            <input
+                              value={number}
+                              type="text"
+                              className="form-control form-control-sm"
+                              style={{ width: "50px" }}
+                            />
 
-                          <button
-                            className="btn btn-link px-2"
-                            onClick={() => dispatch(incNumber())}
-                          >
-                            <i className="fas fa-plus"></i>
-                          </button>
-                        </div>
-                      </td>
-                      <td className="align-middle">
-                        <p className="mb-0" style={{ fontWeight: "500" }}>
-                          {/* {`₹${productAddtoCart.price}`} */}
-                          {/* {`₹${price}`} */}
-                        </p>
-                      </td>
-                    </tr>
+                            <button
+                              className="btn btn-link px-2"
+                              onClick={() => dispatch(incNumber(item.price))}
+                            >
+                              <i className="fas fa-plus"></i>
+                            </button>
+                          </div>
+                        </td>
+                        <td className="align-middle">
+                          <p className="mb-0" style={{ fontWeight: "500" }}>
+                            {`₹${item.price}`}
+                          </p>
+                        </td>
+                      </tr>
+                    ))}
                   </tbody>
                 </table>
               </div>

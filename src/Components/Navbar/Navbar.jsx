@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 const Navbar = () => {
-  const cartLength = useSelector((state) => state.cartLength);
+  const cartLength = useSelector((state) => state.updateCartLength.cartLength);
   return (
     <>
       <nav

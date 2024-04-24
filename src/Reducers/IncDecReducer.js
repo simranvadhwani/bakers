@@ -4,6 +4,7 @@ const initialState = {
 };
 
 const changeTheNumber = (state = initialState, action) => {
+  debugger;
   switch (action.type) {
     case "INCREMENT":
       console.log("State before increment:", state);
@@ -16,8 +17,8 @@ const changeTheNumber = (state = initialState, action) => {
     case "DECREMENT":
       console.log("State before decrement:", state);
       const newStateAfterDecrement = {
-        number: state.number === 0 ? state.number : state.number - 1,
-        price: state.number === 0 ? state.price : state.price - action.payload,
+        number: state.number === 1 ? state.number : state.number - 1,
+        price: state.number === 1 ? state.price : state.price - action.payload,
       };
       console.log("State after decrement:", newStateAfterDecrement);
       return newStateAfterDecrement;

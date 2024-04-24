@@ -1,7 +1,7 @@
-const initialState = {
+const initialstate = {
   cartLength: 0,
 };
-const UpdateLength = (state = initialState, action) => {
+const UpdateLength = (state = initialstate, action) => {
   switch (action.type) {
     case "UPDATE_CART_LENGTH":
       return {

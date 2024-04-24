@@ -1,32 +1,36 @@
 import about1 from "../../img/about-1.jpg";
 import about2 from "../../img/about-2.jpg";
 import bgImage from "../../img/carousel-1.jpg";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { incNumber, decNumber, reset, updateCartLength } from "../../Actions";
 import api from "../../Services/ApiConfigurationService";
-import React, { useState, useEffect, createContext } from "react";
+import React, { useState } from "react";
 
 const ViewProduct = () => {
   const token = localStorage.getItem("token");
-  const navigate = useNavigate();
+  const [error, setError] = useState();
   const { number, price } = useSelector((state) => state.changeTheNumber);
   const dispatch = useDispatch();
   const location = useLocation();
   const { state } = location;
   const productDetails = state ? state.productDetails : null;
-  const [error, setError] = useState();
+  const data = productDetails
+    ? JSON.parse(JSON.stringify(productDetails))
+    : null;
 
+  console.log(data, "data");
   const AddToCart = () => {
-    if (productDetails !== null) {
+    debugger;
+    if (data !== null) {
       api
         .post(
           `Product/addProductToCart`,
           {
-            productId: productDetails.productId,
-            Name: productDetails.name,
+            productId: data.productId,
+            Name: data.name,
             Quantity: number,
-            Price: productDetails.price,
+            Price: data.price,
           },
           {
             headers: {
@@ -35,8 +39,9 @@ const ViewProduct = () => {
           }
         )
         .then((response) => {
-          debugger;
           dispatch(updateCartLength(response.data.cartLength));
+          // Convert productDetails object to a string before storing in localStorage
+          localStorage.setItem("cartData", data);
         })
         .catch((error) => {
           setError(error.message);
@@ -103,12 +108,12 @@ const ViewProduct = () => {
                 <p className="text-primary text-uppercase mb-2">
                   // Product Details
                 </p>
-                <h1 className="display-6 mb-4">{productDetails.name}</h1>
-                <p>{productDetails.discription}</p>
+                <h1 className="display-6 mb-4">{data && data.name}</h1>
+                <p>{data && data.discription}</p>
                 <div className="row g-2 mb-4">
                   <div className="col-sm-6">
                     <i className="fa fa-check text-primary me-2"></i>
-                    {`₹ ${productDetails.price}`}
+                    {data && `₹ ${data.price}`}
                   </div>
                   <div className="col-sm-6">
                     <i className="fa fa-check text-primary me-2"></i>Custom
@@ -160,8 +165,7 @@ const ViewProduct = () => {
                               className="btn btn-primary rounded-pill py-3 px-5"
                               onClick={() => AddToCart()}
                             >
-                              Add To Cart
-                              <i class="fas fa-shopping-cart"></i>
+                              Add To Cart <i class="fas fa-shopping-cart"></i>
                             </Link>
                           </td>
                         </tr>
