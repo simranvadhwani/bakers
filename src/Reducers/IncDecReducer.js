@@ -1,29 +1,38 @@
 const initialState = {
-  number: 1,
-  price: 0,
+  items: [],
+  totalPrice: 0,
 };
 
 const changeTheNumber = (state = initialState, action) => {
-  debugger;
   switch (action.type) {
-    case "INCREMENT":
-      console.log("State before increment:", state);
-      const newStateAfterIncrement = {
-        number: state.number + 1,
-        price: state.price + action.payload,
+    case "INCREMENT_ITEM":
+      // Increment quantity of item in cart
+      return {
+        ...state,
+        items: state.items.map((item) =>
+          item.id === action.payload.id
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
+        ),
       };
-      console.log("State after increment:", newStateAfterIncrement);
-      return newStateAfterIncrement;
-    case "DECREMENT":
-      console.log("State before decrement:", state);
-      const newStateAfterDecrement = {
-        number: state.number === 1 ? state.number : state.number - 1,
-        price: state.number === 1 ? state.price : state.price - action.payload,
+    case "DECREMENT_ITEM":
+      // Decrement quantity of item in cart
+      return {
+        ...state,
+        items: state.items.map((item) =>
+          item.id === action.payload.id && item.quantity > 1
+            ? { ...item, quantity: item.quantity - 1 }
+            : item
+        ),
       };
-      console.log("State after decrement:", newStateAfterDecrement);
-      return newStateAfterDecrement;
-    case "RESET":
-      return initialState;
+    case "UPDATE_CART":
+      // Update entire cart with new items and total price
+      return {
+        ...state,
+        items: action.payload.items,
+        totalPrice: action.payload.totalPrice,
+      };
+
     default:
       return state;
   }

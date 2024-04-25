@@ -1,17 +1,16 @@
-export const incNumber = (amount) => {
-  return {
-    type: "INCREMENT",
-    payload: amount,
-  };
-};
-export const decNumber = (amount) => {
-  return {
-    type: "DECREMENT",
-    payload: amount,
-  };
-};
-export const reset = () => ({
-  type: "RESET",
+export const incrementItem = (itemId) => ({
+  type: "INCREMENT_ITEM",
+  payload: { id: itemId },
+});
+
+export const decrementItem = (itemId) => ({
+  type: "DECREMENT_ITEM",
+  payload: { id: itemId },
+});
+
+export const updateCart = (items, totalPrice) => ({
+  type: "UPDATE_CART",
+  payload: { items, totalPrice },
 });
 
 export const updateCartLength = (length) => ({

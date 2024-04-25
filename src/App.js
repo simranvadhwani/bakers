@@ -23,8 +23,10 @@ import ViewProduct from "./Components/ViewProduct/ViewProduct";
 function App() {
   const [isAdmin, setIsAdmin] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
+  const [lenth, setLenth] = useState(0);
   const navigate = useNavigate();
   useEffect(() => {
+    setCartLength();
     const token = localStorage.getItem("token");
     if (token) {
       const decoded = jwt_decode(token);
@@ -39,6 +41,12 @@ function App() {
       setLoggedIn(true);
     }
   }, [navigate]);
+  const setCartLength = () => {
+    const cartLenth = localStorage.getItem("cartLength");
+    if (cartLenth) {
+      setLenth(cartLenth);
+    }
+  };
   return (
     <>
       {isAdmin ? (
@@ -49,7 +57,7 @@ function App() {
       ) : (
         <>
           <ShowNavbar>
-            <Navbar />
+            <Navbar lenth={lenth} />
           </ShowNavbar>
           <Routes>
             <Route path="/" element={<LogIn />} />
