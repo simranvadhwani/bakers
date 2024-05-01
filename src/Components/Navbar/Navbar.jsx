@@ -1,7 +1,8 @@
 import { React, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-const Navbar = ({ lenth }) => {
+const Navbar = () => {
+  const Length = localStorage.getItem("cartLength");
   return (
     <>
       <nav
@@ -59,7 +60,7 @@ const Navbar = ({ lenth }) => {
             <div className="flex-shrink-0 btn-lg">
               <Link to="/cart">
                 <i className="fas fa-shopping-cart text-primary">
-                  <span className="badge">{lenth}</span>
+                  <span className="badge">{Length}</span>
                 </i>
               </Link>
             </div>

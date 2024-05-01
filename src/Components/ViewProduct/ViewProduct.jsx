@@ -2,19 +2,25 @@ import about1 from "../../img/about-1.jpg";
 import about2 from "../../img/about-2.jpg";
 import bgImage from "../../img/carousel-1.jpg";
 import { Link, useLocation } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { incrementItem, decrementItem, updateCartLength } from "../../Actions";
 import api from "../../Services/ApiConfigurationService";
 import React, { useState } from "react";
 
 const ViewProduct = () => {
   const token = localStorage.getItem("token");
   const [error, setError] = useState();
-  const { items, totalPrice } = useSelector((state) => state.changeTheNumber);
-  const dispatch = useDispatch();
   const location = useLocation();
   const { state } = location;
   const productDetails = state ? state.productDetails : null;
+  const [Quantity, setQuantity] = useState(1);
+  const IncreseQuantity = () => {
+    const qty = Quantity + 1;
+    setQuantity(qty);
+  };
+  const DecreseQuantity = () => {
+    if (Quantity === 1) return;
+    const qty = Quantity - 1;
+    setQuantity(qty);
+  };
 
   const AddToCart = () => {
     if (productDetails !== null) {
@@ -24,7 +30,7 @@ const ViewProduct = () => {
           {
             productId: productDetails.productId,
             Name: productDetails.name,
-            Quantity: items.Quantity,
+            Quantity: Quantity,
             Price: productDetails.price,
           },
           {
@@ -34,7 +40,8 @@ const ViewProduct = () => {
           }
         )
         .then((response) => {
-          dispatch(updateCartLength(response.data.cartLength));
+          console.log(response);
+          // dispatch(updateCartLength(response.data.cartLength));
           // Convert productDetails object to a string before storing in localStorage
           localStorage.setItem("cartLength", response.data.cartLength);
         })
@@ -137,17 +144,13 @@ const ViewProduct = () => {
                             <div className="d-flex flex-row">
                               <button
                                 className="btn btn-link px-2"
-                                onClick={() =>
-                                  dispatch(
-                                    decrementItem(productDetails.productId)
-                                  )
-                                }
+                                onClick={DecreseQuantity}
                               >
                                 <i className="fas fa-minus"></i>
                               </button>
 
                               <input
-                                value={items.quantity}
+                                value={Quantity}
                                 type="text"
                                 className="form-control form-control-sm"
                                 style={{ width: "50px" }}
@@ -155,11 +158,7 @@ const ViewProduct = () => {
 
                               <button
                                 className="btn btn-link px-2"
-                                onClick={() =>
-                                  dispatch(
-                                    incrementItem(productDetails.productId)
-                                  )
-                                }
+                                onClick={IncreseQuantity}
                               >
                                 <i className="fas fa-plus"></i>
                               </button>

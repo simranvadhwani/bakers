@@ -3,30 +3,31 @@ import about1 from "../../img/about-1.jpg";
 import about2 from "../../img/about-2.jpg";
 import bgImage from "../../img/carousel-1.jpg";
 import { Link } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { incrementItem, decrementItem } from "../../Actions";
 import api from "../../Services/ApiConfigurationService";
 const Cart = () => {
   const token = localStorage.getItem("token");
   const [error, setError] = useState();
-  const { items, totalPrice } = useSelector((state) => state.changeTheNumber);
-  const dispatch = useDispatch();
   const [cartData, setCartData] = useState([]);
-  const handleDecrement = (item) => {
-    dispatch(decrementItem(item.id));
+
+  const IncreaseQuantity = (index) => {
+    const updatedCartData = [...cartData]; // Create a copy of the cart data array
+    const item = updatedCartData[index]; // Get the item at the specified index
+    item.quantity++; // Increment the quantity
+    item.totalPrice = item.quantity * item.price; // Recalculate the total price
+    // Optionally, you can update the state if needed
+    setCartData(updatedCartData); // Update the state with the modified cart data
+  };
+  const DecreaseQuantity = (index) => {
+    const updatedCartData = [...cartData]; // Create a copy of the cart data array
+    const item = updatedCartData[index]; // Get the item at the specified index
+    if (item.quantity > 1) {
+      item.quantity--; // Decrement the quantity
+      item.totalPrice = item.quantity * item.price; // Recalculate the total price
+      // Optionally, you can update the state if needed
+      setCartData(updatedCartData); // Update the state with the modified cart data
+    }
   };
 
-  const handleIncrement = (item) => {
-    dispatch(incrementItem(item.id));
-  };
-
-  const calculateTotalPrice = () => {
-    let total = 0;
-    items.forEach((item) => {
-      total += item.quantity * item.price;
-    });
-    return total;
-  };
   useEffect(() => {
     if (token) {
       api
@@ -44,7 +45,6 @@ const Cart = () => {
     }
   }, [token]);
 
-  console.log(cartData, "cartData");
   return (
     <>
       <div
@@ -98,6 +98,7 @@ const Cart = () => {
                     <tbody>
                       {cartData.map((item, index) => (
                         <tr>
+                          {console.log(item, "qqq")}
                           <th scope="row">
                             <div className="d-flex align-items-center">
                               <img
@@ -116,7 +117,7 @@ const Cart = () => {
                             <div className="d-flex flex-row">
                               <button
                                 className="btn btn-link px-2"
-                                onClick={() => handleDecrement(item)}
+                                onClick={() => DecreaseQuantity(index)}
                               >
                                 <i className="fas fa-minus"></i>
                               </button>
@@ -127,11 +128,11 @@ const Cart = () => {
                                 className="form-control form-control-sm"
                                 style={{ width: "50px" }}
                               />
-                              <button
-                                className="btn btn-link px-2"
-                                onClick={() => handleIncrement(item)}
-                              >
-                                <i className="fas fa-plus"></i>
+                              <button className="btn btn-link px-2">
+                                <i
+                                  className="fas fa-plus"
+                                  onClick={() => IncreaseQuantity(index)}
+                                ></i>
                               </button>
                             </div>
                           </td>
@@ -158,7 +159,8 @@ const Cart = () => {
                         style={{ fontWeight: "500" }}
                       >
                         <p className="mb-2">Total Amount</p>
-                        <p className="mb-2">{`₹${calculateTotalPrice()}`}</p>
+                        <p className="mb-2">{`₹$`}</p>
+                        {console.log(cartData, "outer")}
                       </div>
 
                       <button
@@ -167,7 +169,7 @@ const Cart = () => {
                       >
                         <div className="d-flex justify-content-between">
                           <span>Checkout </span>
-                          <span> ₹26.48</span>
+                          <span> {`₹$`}</span>
                         </div>
                       </button>
                     </div>

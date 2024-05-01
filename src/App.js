@@ -26,7 +26,6 @@ function App() {
   const [lenth, setLenth] = useState(0);
   const navigate = useNavigate();
   useEffect(() => {
-    setCartLength();
     const token = localStorage.getItem("token");
     if (token) {
       const decoded = jwt_decode(token);
@@ -41,12 +40,7 @@ function App() {
       setLoggedIn(true);
     }
   }, [navigate]);
-  const setCartLength = () => {
-    const cartLenth = localStorage.getItem("cartLength");
-    if (cartLenth) {
-      setLenth(cartLenth);
-    }
-  };
+
   return (
     <>
       {isAdmin ? (
