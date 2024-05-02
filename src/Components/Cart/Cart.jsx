@@ -8,6 +8,7 @@ const Cart = () => {
   const token = localStorage.getItem("token");
   const [error, setError] = useState();
   const [cartData, setCartData] = useState([]);
+  const [totalPrice, setTotalPrice] = useState(0);
 
   const IncreaseQuantity = (index) => {
     const updatedCartData = [...cartData]; // Create a copy of the cart data array
@@ -27,7 +28,6 @@ const Cart = () => {
       setCartData(updatedCartData); // Update the state with the modified cart data
     }
   };
-
   useEffect(() => {
     if (token) {
       api
@@ -44,6 +44,18 @@ const Cart = () => {
         });
     }
   }, [token]);
+  useEffect(() => {
+    // Calculate total price when cartData changes
+    const calculateTotalPrice = () => {
+      const totalPrice = cartData.reduce(
+        (total, item) => total + item.quantity * item.price,
+        0
+      );
+      setTotalPrice(totalPrice);
+    };
+
+    calculateTotalPrice();
+  }, [cartData]); // Run this effect whenever cartData changes
 
   return (
     <>
@@ -159,7 +171,7 @@ const Cart = () => {
                         style={{ fontWeight: "500" }}
                       >
                         <p className="mb-2">Total Amount</p>
-                        <p className="mb-2">{`₹$`}</p>
+                        <p className="mb-2">{`₹${totalPrice}`}</p>
                         {console.log(cartData, "outer")}
                       </div>
 
@@ -169,7 +181,7 @@ const Cart = () => {
                       >
                         <div className="d-flex justify-content-between">
                           <span>Checkout </span>
-                          <span> {`₹$`}</span>
+                          <span> {`₹${totalPrice}`}</span>
                         </div>
                       </button>
                     </div>
