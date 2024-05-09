@@ -5,13 +5,17 @@ import bgImage from "../../img/carousel-1.jpg";
 import { Link } from "react-router-dom";
 import api from "../../Services/ApiConfigurationService";
 import Payment from "../../Components/Payment/Payment";
-import Razorpay from "razorpay";
+import useRazorpay from "react-razorpay";
+import { useNavigate } from "react-router-dom";
+
 const Cart = () => {
   const token = localStorage.getItem("token");
   const [error, setError] = useState();
   const [cartData, setCartData] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
-  const [orderId, setOrderId] = useState(null);
+  // const [orderId, setOrderId] = useState(null);
+  const navigate = useNavigate();
+  // const [Razorpay] = useRazorpay();
   const IncreaseQuantity = (index) => {
     const updatedCartData = [...cartData]; // Create a copy of the cart data array
     const item = updatedCartData[index]; // Get the item at the specified index
@@ -58,52 +62,49 @@ const Cart = () => {
 
     calculateTotalPrice();
   }, [cartData]);
-  console.log(totalPrice);
-
-  const initiatePayment = async () => {
-    try {
-      // Your API call to initiate payment and get orderId
-      const response = await api.post(`/Payment/order`, { amount: totalPrice });
-      setOrderId(response.data);
-    } catch (error) {
-      console.error("Error initiating payment:", error);
-    }
-  };
-  const handlePayment = async () => {
-    debugger;
-    await initiatePayment();
-    try {
-      const options = {
-        key: "rzp_test_4KHnRiUgIeNaKb", // Enter your Razorpay key
-        amount: totalPrice * 100, // Amount is in paise
-        currency: "INR",
-        name: "Protocolix",
-        description: "Test Payment",
-        order_id: orderId,
-        handler: function (response) {
-          console.log(response);
-          // Handle success
-          alert("Payment successful");
-          // Redirect or show success message
-        },
-        prefill: {
-          name: "Simran V",
-          email: "john@example.com",
-          contact: "9999999999",
-        },
-        notes: {
-          address: "Razorpay Corporate Office",
-        },
-        theme: {
-          color: "#3399cc",
-        },
-      };
-      const razorpay = new Razorpay(options);
-      razorpay.open();
-    } catch (error) {
-      console.error("Error handling payment:", error);
-    }
-  };
+  // const initiatePayment = async () => {
+  //   try {
+  //     // Your API call to initiate payment and get orderId
+  //     const response = await api.post(`/Payment/order`, { amount: totalPrice });
+  //     setOrderId(response.data);
+  //   } catch (error) {
+  //     console.error("Error initiating payment:", error);
+  //   }
+  // };
+  // const handlePayment = async () => {
+  //   await initiatePayment();
+  //   try {
+  //     const options = {
+  //       key: "rzp_test_4KHnRiUgIeNaKb", // Enter your Razorpay key
+  //       amount: totalPrice * 100, // Amount is in paise
+  //       currency: "INR",
+  //       name: "Protocolix",
+  //       description: "Test Payment",
+  //       order_id: orderId,
+  //       handler: function (response) {
+  //         console.log(response);
+  //         // Handle success
+  //         alert("Payment successful");
+  //         navigate("/payment");
+  //       },
+  //       prefill: {
+  //         name: "Simran V",
+  //         email: "vadhwanisimran@gmail.com",
+  //         contact: "9999999999",
+  //       },
+  //       notes: {
+  //         address: "Razorpay Corporate Office",
+  //       },
+  //       theme: {
+  //         color: "#3399cc",
+  //       },
+  //     };
+  //     const razorpay = new Razorpay(options);
+  //     razorpay.open();
+  //   } catch (error) {
+  //     console.error("Error handling payment:", error);
+  //   }
+  // };
   return (
     <>
       <div
@@ -220,22 +221,16 @@ const Cart = () => {
                         <p className="mb-2">{`₹${totalPrice}`}</p>
                       </div>
 
-                      <button
+                      <Link
                         type="button"
-                        onClick={handlePayment}
+                        to="/shipping"
                         className="btn btn-primary btn-block btn-lg"
                       >
                         <div className="d-flex justify-content-between">
                           <span>Checkout </span>
                           <span> {`₹${totalPrice}`}</span>
                         </div>
-                      </button>
-                      {/* Pass orderId as a prop to PaymentComponent if available */}
-                      {orderId ? (
-                        <Payment orderId={orderId} />
-                      ) : (
-                        <div>No orderId yet</div>
-                      )}
+                      </Link>
                     </div>
                   </div>
                 </div>

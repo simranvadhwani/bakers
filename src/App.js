@@ -19,6 +19,8 @@ import AdminHome from "./AdminComponents/AdminHome/AdminHome";
 import { jwtDecode as jwt_decode } from "jwt-decode";
 import Cart from "./Components/Cart/Cart";
 import ViewProduct from "./Components/ViewProduct/ViewProduct";
+import Payment from "./Components/Payment/Payment";
+import Shipping from "./Components/Shipping/Shipping";
 
 function App() {
   const [isAdmin, setIsAdmin] = useState(false);
@@ -62,8 +64,10 @@ function App() {
             <Route path="/services" element={<Services />} />
             <Route path="/ourteam" element={<OurTeam />} />
             <Route path="/contactus" element={<ContactUs />} />
+            <Route path="/payment" element={<Payment />} />
             <Route path="/viewproduct" element={<ViewProduct />} />
             <Route path="/cart" element={<Cart />} />
+            <Route path="/shipping" element={<Shipping />} />
             <Route path="/register" element={<Register />} />
             <Route path="/logout" element={<Logout />} />
             <Route path="*" element={<Navigate to="/" />} />
@@ -73,13 +77,6 @@ function App() {
           </ShowFooter>
         </>
       )}
-
-      <a
-        href="#"
-        className="btn btn-lg btn-primary btn-lg-square rounded-circle back-to-top"
-      >
-        <i className="bi bi-arrow-up"></i>
-      </a>
     </>
   );
 }

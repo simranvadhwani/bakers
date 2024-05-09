@@ -5,7 +5,11 @@ const ShowFooter = ({ children }) => {
   const location = useLocation();
   const [showFooter, setShowFooter] = useState(false);
   useEffect(() => {
-    if (location.pathname === "/" || location.pathname === "/register") {
+    if (
+      location.pathname === "/" ||
+      location.pathname === "/register" ||
+      location.pathname === "/shipping"
+    ) {
       setShowFooter(false);
     } else {
       setShowFooter(true);
