@@ -40,7 +40,6 @@ const Products = () => {
   }, []);
 
   const getProductDetails = (id) => {
-    debugger;
     if (id) {
       api
         .get(`Product/productGetById?id=${id}`, {
@@ -49,7 +48,6 @@ const Products = () => {
           },
         })
         .then((response) => {
-          debugger;
           setProductDetails(response.data);
           navigate("/viewproduct", {
             state: { productDetails: response.data },

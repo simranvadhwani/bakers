@@ -4,8 +4,6 @@ import about2 from "../../img/about-2.jpg";
 import bgImage from "../../img/carousel-1.jpg";
 import { Link } from "react-router-dom";
 import api from "../../Services/ApiConfigurationService";
-import Payment from "../../Components/Payment/Payment";
-import useRazorpay from "react-razorpay";
 import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
@@ -13,9 +11,9 @@ const Cart = () => {
   const [error, setError] = useState();
   const [cartData, setCartData] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
-  // const [orderId, setOrderId] = useState(null);
-  const navigate = useNavigate();
-  // const [Razorpay] = useRazorpay();
+
+
+
   const IncreaseQuantity = (index) => {
     const updatedCartData = [...cartData]; // Create a copy of the cart data array
     const item = updatedCartData[index]; // Get the item at the specified index
@@ -62,49 +60,7 @@ const Cart = () => {
 
     calculateTotalPrice();
   }, [cartData]);
-  // const initiatePayment = async () => {
-  //   try {
-  //     // Your API call to initiate payment and get orderId
-  //     const response = await api.post(`/Payment/order`, { amount: totalPrice });
-  //     setOrderId(response.data);
-  //   } catch (error) {
-  //     console.error("Error initiating payment:", error);
-  //   }
-  // };
-  // const handlePayment = async () => {
-  //   await initiatePayment();
-  //   try {
-  //     const options = {
-  //       key: "rzp_test_4KHnRiUgIeNaKb", // Enter your Razorpay key
-  //       amount: totalPrice * 100, // Amount is in paise
-  //       currency: "INR",
-  //       name: "Protocolix",
-  //       description: "Test Payment",
-  //       order_id: orderId,
-  //       handler: function (response) {
-  //         console.log(response);
-  //         // Handle success
-  //         alert("Payment successful");
-  //         navigate("/payment");
-  //       },
-  //       prefill: {
-  //         name: "Simran V",
-  //         email: "vadhwanisimran@gmail.com",
-  //         contact: "9999999999",
-  //       },
-  //       notes: {
-  //         address: "Razorpay Corporate Office",
-  //       },
-  //       theme: {
-  //         color: "#3399cc",
-  //       },
-  //     };
-  //     const razorpay = new Razorpay(options);
-  //     razorpay.open();
-  //   } catch (error) {
-  //     console.error("Error handling payment:", error);
-  //   }
-  // };
+
   return (
     <>
       <div

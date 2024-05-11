@@ -1,17 +1,48 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Shipping.css";
 import { useForm } from "react-hook-form";
 import api from "../../Services/ApiConfigurationService";
+import useRazorpay from "react-razorpay";
 const Shipping = () => {
+  const navigate = useNavigate();
   const [error, setError] = useState();
   const [cartData, setCartData] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
+  const [isLogin, setIsLogin] = useState(false);
+  const [loginError, setLoginError] = useState(null);
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [orderId, setOrderId] = useState(null);
+  const [Razorpay] = useRazorpay();
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitted },
   } = useForm();
-  const onSubmit = async () => {};
+  const onSubmit = (loginData) => {
+    try {
+      // Set loading state
+      //setIsLogin(true);
+      const response = api.post("Customer/addCustomerData", loginData);
+      //const token = response.data.token;
+      // Store the token in local storage
+      // localStorage.setItem("token", token);
+      // setLoggedIn(true);
+      // setLoginError("Login Successful!");
+      // navigate("/home");
+      handlePayment();
+    } catch (error) {
+      if (error.response && error.response.status === 401) {
+        setIsLogin(false);
+        setLoginError("Invalid customer data.");
+      } else {
+        setLoginError("An error occurred while processing the request.");
+      }
+    } finally {
+      // Reset loading state
+      setIsLogin(false);
+    }
+  };
   useEffect(() => {
     api
       .get(`Cart/getCartData`)
@@ -27,8 +58,9 @@ const Shipping = () => {
   useEffect(() => {
     // Calculate total price when cartData changes
     const calculateTotalPrice = () => {
+      console.log(cartData, "cart");
       const totalPrice = cartData.reduce(
-        (total, item) => total + item.quantity * item.price,
+        (total, item) => total + item.price,
         0
       );
       setTotalPrice(totalPrice);
@@ -36,7 +68,50 @@ const Shipping = () => {
 
     calculateTotalPrice();
   }, [cartData]);
-
+  const initiatePayment = async () => {
+    try {
+      // Your API call to initiate payment and get orderId
+      const response = await api.post(`/Payment/order`, { amount: totalPrice });
+      setOrderId(response.data);
+    } catch (error) {
+      console.error("Error initiating payment:", error);
+    }
+  };
+  const handlePayment = async () => {
+    await initiatePayment();
+    try {
+      const options = {
+        key: "rzp_test_4KHnRiUgIeNaKb", // Enter your Razorpay key
+        amount: totalPrice * 100, // Amount is in paise
+        currency: "INR",
+        name: "Protocolix",
+        description: "Test Payment",
+        order_id: orderId,
+        handler: function (response) {
+          console.log(response);
+          // Handle success
+          alert("Payment successful");
+          //Insert into order table
+          navigate("/payment");
+        },
+        prefill: {
+          name: "Simran V",
+          email: "vadhwanisimran@gmail.com",
+          contact: "9999999999",
+        },
+        notes: {
+          address: "Razorpay Corporate Office",
+        },
+        theme: {
+          color: "#3399cc",
+        },
+      };
+      const razorpay = new Razorpay(options);
+      razorpay.open();
+    } catch (error) {
+      console.error("Error handling payment:", error);
+    }
+  };
   return (
     <>
       <div className="rowsh m-5 container">
@@ -54,7 +129,7 @@ const Shipping = () => {
                     className="form-control"
                     id="name"
                     placeholder="Name"
-                    {...register("username", { required: true })}
+                    {...register("Name", { required: true })}
                   />
 
                   <label htmlFor="email">
@@ -63,8 +138,19 @@ const Shipping = () => {
                   <input
                     type="text"
                     id="email"
-                    name="email"
+                    name="Email"
                     placeholder="john@example.com"
+                    {...register("Email", { required: true })}
+                  />
+                  <label htmlFor="MobileNo">
+                    <i className="fa fa-phone" /> Mobile No
+                  </label>
+                  <input
+                    type="text"
+                    id="MobileNo"
+                    name="MobileNo"
+                    placeholder="5257892578"
+                    {...register("MobileNo", { required: true })}
                   />
                   <label htmlFor="adr">
                     <i className="fa fa-address-card-o" /> Address
@@ -72,8 +158,9 @@ const Shipping = () => {
                   <input
                     type="text"
                     id="adr"
-                    name="address"
+                    name="Address"
                     placeholder="542 W. 15th Street"
+                    {...register("Address", { required: true })}
                   />
                   <label htmlFor="city">
                     <i className="fa fa-institution" /> City
@@ -81,8 +168,9 @@ const Shipping = () => {
                   <input
                     type="text"
                     id="city"
-                    name="city"
+                    name="City"
                     placeholder="New York"
+                    {...register("City", { required: true })}
                   />
                   <div className="rowsh">
                     <div className="col-50sh">
@@ -90,8 +178,9 @@ const Shipping = () => {
                       <input
                         type="text"
                         id="state"
-                        name="state"
+                        name="State"
                         placeholder="NY"
+                        {...register("State", { required: true })}
                       />
                     </div>
                     <div className="col-50sh">
@@ -99,78 +188,14 @@ const Shipping = () => {
                       <input
                         type="text"
                         id="zip"
-                        name="zip"
+                        name="Zip"
                         placeholder={10001}
-                      />
-                    </div>
-                  </div>
-                </div>
-                <div className="col-50sh">
-                  <h3>Payment</h3>
-                  <label htmlFor="fname">Accepted Cards</label>
-                  <div className="icon-container">
-                    <i className="fa fa-cc-visa" style={{ color: "navy" }} />
-                    <i className="fas fa-cc-amex" style={{ color: "blue" }} />
-                    <i
-                      className="fas fa-cc-mastercard"
-                      style={{ color: "red" }}
-                    />
-                    <i
-                      className="fa fa-cc-discover"
-                      style={{ color: "orange" }}
-                    />
-                  </div>
-                  <label htmlFor="cname">Name on Card</label>
-                  <input
-                    type="text"
-                    id="cname"
-                    name="cardname"
-                    placeholder="John More Doe"
-                  />
-                  <label htmlFor="ccnum">Credit card number</label>
-                  <input
-                    type="text"
-                    id="ccnum"
-                    name="cardnumber"
-                    placeholder="1111-2222-3333-4444"
-                  />
-                  <label htmlFor="expmonth">Exp Month</label>
-                  <input
-                    type="text"
-                    id="expmonth"
-                    name="expmonth"
-                    placeholder="September"
-                  />
-                  <div className="rowsh">
-                    <div className="col-50sh">
-                      <label htmlFor="expyear">Exp Year</label>
-                      <input
-                        type="text"
-                        id="expyear"
-                        name="expyear"
-                        placeholder={2018}
-                      />
-                    </div>
-                    <div className="col-50sh">
-                      <label htmlFor="cvv">CVV</label>
-                      <input
-                        type="text"
-                        id="cvv"
-                        name="cvv"
-                        placeholder={352}
+                        {...register("Zip", { required: true })}
                       />
                     </div>
                   </div>
                 </div>
               </div>
-              <label>
-                <input
-                  type="checkbox"
-                  defaultChecked="checked"
-                  name="sameadr"
-                />{" "}
-                Shipping address same as billing
-              </label>
               <input
                 type="submit"
                 defaultValue="Continue to checkout"
@@ -193,7 +218,7 @@ const Shipping = () => {
             <p>
               Total{" "}
               <span className="pricesh" style={{ color: "black" }}>
-                <b>$30</b>
+                <b>{`₹${totalPrice}`}</b>
               </span>
             </p>
           </div>
