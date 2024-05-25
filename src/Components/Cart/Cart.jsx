@@ -12,8 +12,6 @@ const Cart = () => {
   const [cartData, setCartData] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
 
-
-
   const IncreaseQuantity = (index) => {
     const updatedCartData = [...cartData]; // Create a copy of the cart data array
     const item = updatedCartData[index]; // Get the item at the specified index
@@ -34,18 +32,7 @@ const Cart = () => {
   };
   useEffect(() => {
     if (token) {
-      api
-        .get(`Product/getCartProducts`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
-        .then((response) => {
-          setCartData(response.data);
-        })
-        .catch((error) => {
-          setError(error.message);
-        });
+      allProducts();
     }
   }, [token]);
   useEffect(() => {
@@ -60,6 +47,39 @@ const Cart = () => {
 
     calculateTotalPrice();
   }, [cartData]);
+
+  const allProducts = () => {
+    api
+      .get(`Product/getCartProducts`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        setCartData(response.data);
+      })
+      .catch((error) => {
+        setError(error.message);
+      });
+  };
+
+  const removeProduct = async (productId) => {
+    try {
+      console.log(`Attempting to delete product with ID: ${productId}`);
+      const response = await api.delete(`Product/deleteProducts/${productId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      console.log(response);
+
+      if (response.status === 204) {
+        allProducts();
+      }
+    } catch (error) {
+      console.error("There was a problem with the API call:", error);
+    }
+  };
 
   return (
     <>
@@ -109,6 +129,7 @@ const Cart = () => {
                         </th>
                         <th scope="col">Quantity</th>
                         <th scope="col">Price</th>
+                        <th scope="col">Remove</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -155,6 +176,19 @@ const Cart = () => {
                             <p className="mb-0" style={{ fontWeight: "500" }}>
                               {`₹${item.price}`}
                             </p>
+                          </td>
+                          <td className="align-middle">
+                            <div className="d-flex flex-row">
+                              <button
+                                className="btn btn-link px-2"
+                                onClick={() => removeProduct(item.productId)}
+                              >
+                                <i
+                                  className="fa fa-trash"
+                                  aria-hidden="true"
+                                ></i>
+                              </button>
+                            </div>
                           </td>
                         </tr>
                       ))}
