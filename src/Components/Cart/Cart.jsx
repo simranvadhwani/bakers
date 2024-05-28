@@ -74,6 +74,17 @@ const Cart = () => {
       console.log(response);
 
       if (response.status === 204) {
+        // Remove item from local storage cartItems
+        const cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+        const updatedCartItems = cartItems.filter(
+          (item) => item.productId !== productId
+        );
+        localStorage.setItem("cartItems", JSON.stringify(updatedCartItems));
+
+        // Optionally update cart length in local storage or application state
+        localStorage.setItem("cartLength", updatedCartItems.length);
+
+        // Refresh products list or perform any other necessary updates
         allProducts();
       }
     } catch (error) {

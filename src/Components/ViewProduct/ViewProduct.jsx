@@ -3,53 +3,95 @@ import about2 from "../../img/about-2.jpg";
 import bgImage from "../../img/carousel-1.jpg";
 import { Link, useLocation } from "react-router-dom";
 import api from "../../Services/ApiConfigurationService";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const ViewProduct = () => {
   const token = localStorage.getItem("token");
-  const [error, setError] = useState();
+  const [error, setError] = useState(null);
   const location = useLocation();
   const { state } = location;
-  const productDetails = state ? state.productDetails : null;
+  const [cartItemCount, setCartItemCount] = useState(0);
+
+  // Try to get productDetails from state, fallback to localStorage
+  const productDetails =
+    state?.productDetails || JSON.parse(localStorage.getItem("productDetails"));
+
   const [Quantity, setQuantity] = useState(1);
+
   const IncreseQuantity = () => {
-    const qty = Quantity + 1;
-    setQuantity(qty);
+    setQuantity(Quantity + 1);
   };
+
   const DecreseQuantity = () => {
-    if (Quantity === 1) return;
-    const qty = Quantity - 1;
-    setQuantity(qty);
+    if (Quantity > 1) {
+      setQuantity(Quantity - 1);
+    }
   };
 
   const AddToCart = () => {
-    if (productDetails !== null) {
-      api
-        .post(
-          `Product/addProductToCart`,
-          {
-            productId: productDetails.productId,
-            Name: productDetails.name,
-            Quantity: Quantity,
-            Price: productDetails.price,
-          },
-          {
+    if (productDetails) {
+      // Retrieve existing cart items from local storage, or initialize an empty array if none exist
+      let cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+
+      // Check if the product already exists in the cart
+      const existingItemIndex = cartItems.findIndex(
+        (item) => item.productId === productDetails.productId
+      );
+
+      let newCartItem; // Define newCartItem outside the if-else block
+
+      if (existingItemIndex !== -1) {
+        // Update quantity if the product already exists
+        cartItems[existingItemIndex].Quantity = Quantity;
+      } else {
+        // Create a new cart item object if it doesn't exist in the cart
+        newCartItem = {
+          productId: productDetails.productId,
+          Name: productDetails.name,
+          Description: productDetails.description,
+          Quantity: Quantity,
+          Price: productDetails.price,
+        };
+
+        // Add the new cart item to the cart items array
+        cartItems.push(newCartItem);
+      }
+
+      // Store the updated cart items array back to local storage
+      localStorage.setItem("cartItems", JSON.stringify(cartItems));
+
+      // Update cart length in local storage
+      const updatedCartLength = cartItems.length;
+      localStorage.setItem("cartLength", updatedCartLength);
+
+      // Update cartItemCount state in Navbar component
+      setCartItemCount(updatedCartLength);
+
+      // Make an API call to update the cart on the server
+      if (newCartItem) {
+        // Ensure newCartItem is defined before making the API call
+        api
+          .post(`Product/addProductToCart`, newCartItem, {
             headers: {
               Authorization: `Bearer ${token}`,
             },
-          }
-        )
-        .then((response) => {
-          console.log(response);
-          // dispatch(updateCartLength(response.data.cartLength));
-          // Convert productDetails object to a string before storing in localStorage
-          localStorage.setItem("cartLength", response.data.cartLength);
-        })
-        .catch((error) => {
-          setError(error.message);
-        });
+          })
+          .then((response) => {
+            // Optionally, update cart length in local storage or application state
+            localStorage.setItem("cartLength", response.data.cartLength);
+          })
+          .catch((error) => {
+            setError(error.message);
+          });
+      }
+    } else {
+      console.error("productDetails is null");
     }
   };
+  useEffect(() => {
+    console.log("productDetails updated:", productDetails);
+  }, [productDetails]);
+
   return (
     <>
       <div
@@ -68,7 +110,7 @@ const ViewProduct = () => {
           </h1>
           <nav aria-label="breadcrumb animated slideInDown">
             <ol className="breadcrumb justify-content-center mb-0">
-              <li class="breadcrumb-item">
+              <li className="breadcrumb-item">
                 <Link className="text-white" to="/products">
                   Products
                 </Link>
@@ -110,14 +152,13 @@ const ViewProduct = () => {
                 <p className="text-primary text-uppercase mb-2">
                   // Product Details
                 </p>
-                <h1 className="display-6 mb-4">
-                  {productDetails && productDetails.name}
-                </h1>
-                <p>{productDetails && productDetails.discription}</p>
+
+                <h1 className="display-6 mb-4">{productDetails?.name}</h1>
+                <p>{productDetails?.discription}</p>
                 <div className="row g-2 mb-4">
                   <div className="col-sm-6">
                     <i className="fa fa-check text-primary me-2"></i>
-                    {productDetails && `₹ ${productDetails.price}`}
+                    {`₹ ${productDetails?.price}`}
                   </div>
                   <div className="col-sm-6">
                     <i className="fa fa-check text-primary me-2"></i>Custom
@@ -131,8 +172,8 @@ const ViewProduct = () => {
                     <i className="fa fa-check text-primary me-2"></i>Home
                     Delivery
                   </div>
-                  <div class="table-responsive">
-                    <table class="table">
+                  <div className="table-responsive">
+                    <table className="table">
                       <thead>
                         <tr>
                           <th scope="col">Quantity</th>
@@ -167,9 +208,10 @@ const ViewProduct = () => {
                           <td className="align-middle">
                             <Link
                               className="btn btn-primary rounded-pill py-3 px-5"
-                              onClick={() => AddToCart()}
+                              onClick={AddToCart}
                             >
-                              Add To Cart <i class="fas fa-shopping-cart"></i>
+                              Add To Cart{" "}
+                              <i className="fas fa-shopping-cart"></i>
                             </Link>
                           </td>
                         </tr>

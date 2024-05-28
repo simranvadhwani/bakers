@@ -48,9 +48,11 @@ const Products = () => {
           },
         })
         .then((response) => {
-          setProductDetails(response.data);
+          const productData = response.data;
+          setProductDetails(productData);
+          localStorage.setItem("productDetails", JSON.stringify(productData)); // Save to local storage
           navigate("/viewproduct", {
-            state: { productDetails: response.data },
+            state: { productDetails: productData },
           });
         })
         .catch((error) => {

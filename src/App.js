@@ -25,7 +25,7 @@ import Shipping from "./Components/Shipping/Shipping";
 function App() {
   const [isAdmin, setIsAdmin] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
-  const [lenth, setLenth] = useState(0);
+  const [cartLength, setCartLength] = useState(0);
   const navigate = useNavigate();
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -43,6 +43,28 @@ function App() {
     }
   }, [navigate]);
 
+  useEffect(() => {
+    // Initialize cart length from local storage
+    const storedCartLength = localStorage.getItem("cartLength");
+    if (storedCartLength) {
+      setCartLength(parseInt(storedCartLength));
+    }
+
+    // Set up storage event listener
+    const handleStorageChange = () => {
+      const updatedCartLength = localStorage.getItem("cartLength");
+      if (updatedCartLength) {
+        setCartLength(parseInt(updatedCartLength));
+      }
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+
+    // Clean up event listener
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+    };
+  }, []);
   return (
     <>
       {isAdmin ? (
@@ -53,7 +75,7 @@ function App() {
       ) : (
         <>
           <ShowNavbar>
-            <Navbar lenth={lenth} />
+            <Navbar cartLength={cartLength} />
           </ShowNavbar>
           <Routes>
             <Route path="/" element={<LogIn />} />
