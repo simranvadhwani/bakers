@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const AdminHome = () => {
@@ -17,7 +17,7 @@ const AdminHome = () => {
   };
 
   return (
-    <div>
+    <div style={{ marginLeft: "500px" }}>
       <h1>AdminHome</h1>
       <button onClick={onClick}>Logout</button>
     </div>

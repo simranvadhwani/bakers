@@ -8,7 +8,7 @@ const Logout = () => {
     setToken("");
     return localStorage.removeItem("token");
   }, []);
-  return <div>{navigate("/login")}</div>;
+  return <div>{navigate("/")}</div>;
 };
 
 export default Logout;

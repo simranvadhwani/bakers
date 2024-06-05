@@ -59,7 +59,7 @@ const Navbar = ({ cartLength }) => {
             <div className="flex-shrink-0 btn-lg">
               <Link to="/cart">
                 <i className="fas fa-shopping-cart text-primary">
-                  <span className="badge">cartLenth:{cartLength}</span>
+                  <span className="badge">{cartLength}</span>
                 </i>
               </Link>
             </div>
